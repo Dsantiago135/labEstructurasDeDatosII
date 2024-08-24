@@ -11,14 +11,9 @@ namespace clsString {
 		int varCount = 0;
 
 		for (size_t i = 0; i <= prmStr.length() - prmPattern.length(); i++) {
-			bool coincidencia = true;
-			for (size_t j = 0; j < prmPattern.length(); j++) {
-				if (prmStr[i + j] != prmPattern[j]) {
-					coincidencia = false;
-					break;
-				}
-			}
-			if (coincidencia) varCount++;
+			size_t j = 0;
+			while (j < prmPattern.length() && prmStr[i + j] == prmPattern[j]) j++;
+			if (j == prmPattern.length()) varCount++;
 		}
 		return varCount;
 	}
