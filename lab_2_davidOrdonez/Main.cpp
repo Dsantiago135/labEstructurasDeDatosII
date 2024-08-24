@@ -17,7 +17,9 @@ int main(int argc, char *argv[]) {
 	cout
 		<< varStr << " contains "
 		<< varParttern << "? :"
-		<< (opContainsBy(varStr, varParttern,0 ,0) ? " yes" : " no")
+		<< (opContainsBy(varStr, varParttern, 0, 0) ? " yes" : " no") <<endl;
+	cout
+		<< "la subcadena se encontro: " << (opContainsBy(varStr, varParttern)) << " veces"
 		<< endl;
 	return 0;
 }
