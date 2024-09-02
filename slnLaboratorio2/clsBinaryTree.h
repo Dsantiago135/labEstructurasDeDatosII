@@ -6,15 +6,11 @@ using std::endl;
 
 namespace libBinaryTree {
 	template <class T>
-	/**
-	* @brief Arbol Binario de Busqueda
-	*/
+	/*@brief Arbol Binario de Busqueda*/
 	class clsBinaryTree {
 #pragma region Attributes
 	private:
-		/**
-		* @brief Nodo binario
-		*/
+		/*@brief Nodo binario*/
 		struct attNode {
 			T attData; /*!< Dato almacenado */
 			attNode* attLeft; /*!< Referencia al hijo izquierdo */
@@ -22,15 +18,16 @@ namespace libBinaryTree {
 
 			attNode(T prmData) :attData(prmData), attLeft(nullptr), attRight(nullptr) {}
 		};
+		/*@brief Nodo Raiz del árbol*/
 		attNode* attRoot = nullptr;
 #pragma endregion
 #pragma region Operations
 	private:
+		/**
+		* @brief Recorrido preorden a partir de prmNode (prmNode->dato, prmNode->izq, prmNode->der)
+		* @param prmNode Nodo de inicio del recorrido
+		*/
 		void opPreOrder(attNode* prmNode) {
-			/**
-			* @brief Recorrido preorden a partir de prmNode (prmNode->dato, prmNode->izq, prmNode->der)
-			* @param prmNode Nodo de inicio del recorrido
-			*/
 			if (prmNode == nullptr) {
 				return;
 			}
@@ -39,11 +36,11 @@ namespace libBinaryTree {
 			opPreOrder(prmNode->attLeft);
 			opPreOrder(prmNode->attRight);
 		}
+		/**
+		* @brief Recorrido inorden a partir de prmNode (prmNode->izq, prmNode->dato, prmNode->der)
+		* @param prmNode Nodo de inicio del recorrido
+		*/
 		void opInOrder(attNode* prmNode) {
-			/**
-			* @brief Recorrido inorden a partir de prmNode (prmNode->izq, prmNode->dato, prmNode->der)
-			* @param prmNode Nodo de inicio del recorrido
-			*/
 			if (prmNode == nullptr) {
 				return;
 			}
@@ -54,11 +51,11 @@ namespace libBinaryTree {
 			//Invocar recursivamente inorden en el hijo derecho
 			opInOrder(prmNode->attRight);
 		}
+		/**
+		*@brief Recorrido Posorden a partir de prmNode (prmNode->izq, prmNode->der, prmNode->dato)
+		*@param prmNode Nodo de inicio del recorrido
+		*/
 		void opPosOrder(attNode* prmNode) {
-			/**
-			* @brief Recorrido inorden a partir de prmNode (prmNode->izq, prmNode->der, prmNode->dato)
-			* @param prmNode Nodo de inicio del recorrido
-			*/
 			if (prmNode == nullptr) {
 				return;
 			}
@@ -68,13 +65,13 @@ namespace libBinaryTree {
 			opPosOrder(prmNode->attRight);
 			cout << " " << prmNode->attData;
 		}
+		/**
+		* @brief Intenta insertar un nuevo dato a partir de prmDadNode
+		* @param prmDadNode Potencial padre del nodo
+		* @param prmNewNode Nuevo nodo
+		* @return true si prmNewNode pudo ser insertado
+		*/
 		bool opInsert(attNode* prmDadNode, attNode* prmNewNode) {
-			/**
-			* @brief Intenta insertar un nuevo dato a partir de prmDadNode
-			* @param prmDadNode Potencial padre del nodo
-			* @param prmNewNode Nuevo nodo
-			* @return true si prmNewNode pudo ser insertado
-			*/
 			// Verificar si el dato ya esta en el arbol
 			if (prmDadNode->attData == prmNewNode->attData) return false;
 
@@ -105,18 +102,18 @@ namespace libBinaryTree {
 			}
 		}
 	public:
+		/**
+		* @brief Permite verificar si el arbol esta vacio
+		* @return true si el arbol se encuentra vacio
+		*/
 		bool opItsEmpty() {
-			/**
-			* @brief Permite verificar si el arbol esta vacio
-			* @return true si el arbol se encuentra vacio
-			*/
 			return (attRoot == nullptr);
 		}
+		/**
+		* @brief Insertar un nuevo dato en el arbol
+		* @param prmData Nuevo dato a insertar
+		*/
 		void opInsert(T prmData) {
-			/**
-			* @brief Insertar un nuevo dato en el arbol
-			* @param prmData Nuevo dato a insertar
-			*/
 			cout << "Insertar " << prmData << endl;
 			// Crear un nuevo nodo que contiene el dato
 			attNode* varNewNode = new attNode(prmData);
@@ -133,22 +130,24 @@ namespace libBinaryTree {
 				}
 			}
 		}
+		/**
+		* @brief Imprime el recorrido en preorden (dato, izq, der)
+		*/
 		void opPreOrder() {
-			/**
-			* @brief Imprime el recorrido en preorden (dato, izq, der)
-			*/
+
 			opPreOrder(attRoot);
 		}
+		/**
+		* @brief Imprime el recorrido en inorden (izq, dato, der)
+		*/
 		void opInOrder() {
-			/**
-			* @brief Imprime el recorrido en inorden (izq, dato, der)
-			*/
+
 			opInOrder(attRoot);
 		}
+		/**
+		* @brief Imprime el recorrido en posorden (izq, der, dato)
+		*/
 		void opPosOrder() {
-			/**
-			* @brief Imprime el recorrido en posorden (izq, der, dato)
-			*/
 			opPosOrder(attRoot);
 		}
 #pragma endregion
