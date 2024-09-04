@@ -30,11 +30,11 @@ int main(int argc, char* argv[]) {
 	varTree.opInsert(27);
 	cout << (varTree.opItsEmpty() ? "El arbol esta vacio" : "El arbol no esta vacio") << endl;
 	//Imprimir el árbol
-	varTree.opPreOrder();
+	varTree.opShowPreOrder();
 	cout << endl;
-	varTree.opInOrder();
+	varTree.opShowInOrder();
 	cout << endl;
-	varTree.opPosOrder();
+	varTree.opShowPosOrder();
 	cout << endl;
 	return 0;
 }
