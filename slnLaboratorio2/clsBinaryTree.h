@@ -85,7 +85,7 @@ namespace libBinaryTree {
 			if (prmNode->attData == prmData)
 			{
 				//Si el nodo es una hoja elimina el nodo y termina
-				if (prmNode.opItsLeaf()) {
+				if (prmNode->opItsLeaf()) {
 					prmNode = nullptr;
 					delete prmNode;
 					return;
@@ -94,11 +94,11 @@ namespace libBinaryTree {
 				//Si el nodo tiene hijos izquierdos se trabajaran con ellos, de lo contrario se usaran los hijos derechos
 				if (prmNode->attLeft != nullptr) {
 					//Intercambio del dato del nodo a eliminar y del nodo más grande de la izquierda
-					prmNode->attData = opGolargestOnTheLeft(prmNode).attData;
+					prmNode->attData = opGolargestOnTheLeft(prmNode)->attData;
 				}
 				else {
 					//Intercambio del dato del nodo a eliminar y del nodo más pequeño de la derecha
-					prmNode->attData = opGoSmallestOnTheRight(prmNode).attData;
+					prmNode->attData = opGoSmallestOnTheRight(prmNode)->attData;
 				};
 			}
 			//Si el nodo NO contiene el dato
@@ -162,9 +162,9 @@ namespace libBinaryTree {
 		*/
 		strNode opGoExtremeLeft(strNode prmNode) {
 			//si el nodo no tiene un hijo izquierda se retorna a él mismo
-			if (prmNode.attLeft == nullptr) return prmNode;
+			if (prmNode->attLeft == nullptr) return prmNode;
 			//si el nodo si tiene un hijo izquierdo la función se llama a si misma dando como nodo raiz el hijo izquierdo
-			return opGoExtremeLeft(prmNode.attLeft);
+			return opGoExtremeLeft(prmNode->attLeft);
 		}
 		/*
 		@brief Va a el dato más a la derecha del árbol
@@ -172,9 +172,9 @@ namespace libBinaryTree {
 		*/
 		strNode opGoExtremeRight(strNode prmNode) {
 			//si el nodo no tiene un hijo derecho se retorna a él mismo
-			if (prmNode.attRight == nullptr) return prmNode;
+			if (prmNode->attRight == nullptr) return prmNode;
 			//si el nodo si tiene un hijo derecho la función se llama a si misma dando como nodo raiz el hijo derecho
-			return opGoExtremeRight(prmNode.attRight);
+			return opGoExtremeRight(prmNode->attRight);
 		}
 	public:
 		/**

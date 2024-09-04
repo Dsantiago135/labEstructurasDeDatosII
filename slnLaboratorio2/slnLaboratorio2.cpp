@@ -36,5 +36,13 @@ int main(int argc, char* argv[]) {
 	cout << endl;
 	varTree.opShowPosOrder();
 	cout << endl;
+	//imprime el árbol despues de eliminar un dato
+	varTree.opRemove(47);
+	varTree.opShowPreOrder();
+	cout << endl;
+	varTree.opShowInOrder();
+	cout << endl;
+	varTree.opShowPosOrder();
+	cout << endl;
 	return 0;
 }
