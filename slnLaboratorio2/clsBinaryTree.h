@@ -263,7 +263,7 @@ namespace libBinaryTree {
 			opPosOrder(attRoot);
 		}
 #pragma endregion
-#pragma region public_Utilities
+#pragma region public_Query
 		/**
 		* @brief Permite verificar si el arbol esta vacio
 		* @return true si el arbol se encuentra vacio
