@@ -37,6 +37,7 @@ namespace libBinaryTree {
 #pragma endregion
 #pragma region Operations
 	private:
+#pragma region private_CRUD
 		/**
 		* @brief Intenta insertar un nuevo dato a partir de prmDadNode
 		* @param prmDadNode Potencial padre del nodo
@@ -80,9 +81,9 @@ namespace libBinaryTree {
 		*/
 		void opRemove(strNode* prmNode,T prmData) {
 			//Si el nodo es nulo el dato no está en el árbol
-			if (prmNode== nullptr) return;
+			if (prmNode == nullptr) return;
 			//Si el nodo SI contiene el dato
-			if (prmNode->attData == prmData)
+			if (prmNode->opContain(prmData))
 			{
 				//Si el nodo es una hoja elimina el nodo y termina
 				if (prmNode->opItsLeaf()) {
@@ -90,15 +91,18 @@ namespace libBinaryTree {
 					delete prmNode;
 					return;
 				}
-				//Si el nodo no es hoja
+				//Si el nodo no es hoja 
 				//Si el nodo tiene hijos izquierdos se trabajaran con ellos, de lo contrario se usaran los hijos derechos
 				if (prmNode->attLeft != nullptr) {
 					//Intercambio del dato del nodo a eliminar y del nodo más grande de la izquierda
-					prmNode->attData = opGolargestOnTheLeft(prmNode)->attData;
+					
+					return;
+
 				}
 				else {
 					//Intercambio del dato del nodo a eliminar y del nodo más pequeño de la derecha
-					prmNode->attData = opGoSmallestOnTheRight(prmNode)->attData;
+					
+					return;
 				};
 			}
 			//Si el nodo NO contiene el dato
@@ -114,10 +118,12 @@ namespace libBinaryTree {
 				};
 			};
 		}
+#pragma endregion
+#pragma region private_ShowTree
 		/**
-		* @brief Recorrido preorden a partir de prmNode (prmNode->dato, prmNode->izq, prmNode->der)
-		* @param prmNode Nodo de inicio del recorrido
-		*/
+* @brief Recorrido preorden a partir de prmNode (prmNode->dato, prmNode->izq, prmNode->der)
+* @param prmNode Nodo de inicio del recorrido
+*/
 		void opPreOrder(strNode* prmNode) {
 			if (prmNode == nullptr) {
 				return;
@@ -156,11 +162,13 @@ namespace libBinaryTree {
 			opPosOrder(prmNode->attRight);
 			cout << " " << prmNode->attData;
 		}
+#pragma endregion
+#pragma region private_Utilities
 		/*
-		@brief Va a el dato más a la izquierda del árbol
-		@param Dato raiz del árbol o subarbol
-		*/
-		strNode opGoExtremeLeft(strNode prmNode) {
+@brief Va a el dato más a la izquierda del árbol
+@param Dato raiz del árbol o subarbol
+*/
+		strNode* opGoExtremeLeft(strNode* prmNode) {
 			//si el nodo no tiene un hijo izquierda se retorna a él mismo
 			if (prmNode->attLeft == nullptr) return prmNode;
 			//si el nodo si tiene un hijo izquierdo la función se llama a si misma dando como nodo raiz el hijo izquierdo
@@ -170,24 +178,43 @@ namespace libBinaryTree {
 		@brief Va a el dato más a la derecha del árbol
 		@param Dato raiz del árbol o subarbol
 		*/
-		strNode opGoExtremeRight(strNode prmNode) {
+		strNode* opGoExtremeRight(strNode* prmNode) {
 			//si el nodo no tiene un hijo derecho se retorna a él mismo
 			if (prmNode->attRight == nullptr) return prmNode;
 			//si el nodo si tiene un hijo derecho la función se llama a si misma dando como nodo raiz el hijo derecho
 			return opGoExtremeRight(prmNode->attRight);
 		}
-	public:
 		/**
-		* @brief Permite verificar si el arbol esta vacio
-		* @return true si el arbol se encuentra vacio
+		*@brief Va al dato más grande de la izquierda del arbol o subarbol
+		*@param Dato raiz del que se iniciara la iteración
+		*@return Dato más grande de la izquierda de la raiz
 		*/
-		bool opItsEmpty() {
-			return (attRoot == nullptr);
+		strNode* opGolargestOnTheLeft(strNode* prmNode) {
+			//si el nodo no tiene hijo izquierdo no retorna nada
+			if (prmNode->attLeft == nullptr) return prmNode;
+			//si el nodo si tiene un hijo  izquierdo se mueve a este y va lo más a la derecha posible
+			prmNode = prmNode->attLeft;
+			return opGoExtremeRight(prmNode);
 		}
 		/**
-		* @brief Insertar un nuevo dato en el arbol
-		* @param prmData Nuevo dato a insertar
+		*@brief Va al dato más pequeño de la derecha del arbol o subarbol
+		*@param Dato raiz del que se iniciara la iteración
+		*@return Dato más pequeño de la derecha de la raiz
 		*/
+		strNode* opGoSmallestOnTheRight(strNode* prmNode) {
+			//si el nodo no tiene hijo izquierdo no retorna nada
+			if (prmNode->attRight == nullptr) return prmNode;
+			//si el nodo si tiene un hijo derecho se mueve a este y va lo más a la izquierda posible
+			prmNode = prmNode->attRight;
+			return opGoExtremeLeft(prmNode);
+		}
+#pragma endregion
+	public:
+#pragma region public_CRUD
+		/**
+* @brief Insertar un nuevo dato en el arbol
+* @param prmData Nuevo dato a insertar
+*/
 		void opInsert(T prmData) {
 			cout << "Insertar " << prmData << endl;
 			// Crear un nuevo nodo que contiene el dato
@@ -213,9 +240,11 @@ namespace libBinaryTree {
 			if (opItsEmpty())return;
 			opRemove(attRoot, prmData);
 		}
+#pragma endregion
+#pragma region public_ShowTree
 		/**
-		* @brief Imprime el recorrido en preorden (dato, izq, der)
-		*/
+* @brief Imprime el recorrido en preorden (dato, izq, der)
+*/
 		void opShowPreOrder() {
 
 			opPreOrder(attRoot);
@@ -233,30 +262,16 @@ namespace libBinaryTree {
 		void opShowPosOrder() {
 			opPosOrder(attRoot);
 		}
+#pragma endregion
+#pragma region public_Utilities
 		/**
-		*@brief Va al dato más grande de la izquierda del arbol o subarbol
-		*@param Dato raiz del que se iniciara la iteración
-		*@return Dato más grande de la izquierda de la raiz
+		* @brief Permite verificar si el arbol esta vacio
+		* @return true si el arbol se encuentra vacio
 		*/
-		strNode opGolargestOnTheLeft(strNode prmNode){
-			//si el nodo no tiene hijo izquierdo no retorna nada
-			if (prmNode.attLeft == nullptr) return;
-			//si el nodo si tiene un hijo  izquierdo se mueve a este y va lo más a la derecha posible
-			prmNode = prmNode.attLeft; 
-			return opGoExtremeRight(prmNode);
+		bool opItsEmpty() {
+			return (attRoot == nullptr);
 		}
-		/**
-		*@brief Va al dato más pequeño de la derecha del arbol o subarbol
-		*@param Dato raiz del que se iniciara la iteración
-		*@return Dato más pequeño de la derecha de la raiz
-		*/
-		strNode opGoSmallestOnTheRight(strNode prmNode) {
-			//si el nodo no tiene hijo izquierdo no retorna nada
-			if (prmNode.attRight == nullptr) return;
-			//si el nodo si tiene un hijo derecho se mueve a este y va lo más a la izquierda posible
-			prmNode = prmNode.attRight;
-			return opGoExtremeLeft(prmNode);
-		}
+#pragma endregion
 #pragma endregion
 	};
 };
