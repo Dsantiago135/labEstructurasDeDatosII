@@ -79,44 +79,55 @@ namespace libBinaryTree {
 		* @param Nodo a verficar
 		* @param Dato a eliminar
 		*/
-		void opRemove(strNode* prmNode,T prmData) {
-			//Si el nodo es nulo el dato no está en el árbol
+		void opRemove(strNode* prmDadNode, strNode* prmNode, T prmData) {
+			//si el nodo es nulo no retorna nada
 			if (prmNode == nullptr) return;
-			//Si el nodo SI contiene el dato
-			if (prmNode->opContain(prmData))
-			{
-				//Si el nodo es una hoja elimina el nodo y termina
+
+			if (prmNode->opContain(prmNode)) {
 				if (prmNode->opItsLeaf()) {
-					prmNode = nullptr;
-					delete prmNode;
-					return;
+					if (prmDadNode->attLeft == prmNode) {
+						prmDadNode->attLeft = nullptr;
+						delete prmNode;
+					}
+					else if(prmDadNode->attRight == prmNode)
+					{
+						prmDadNode->attRight == nullptr;
+						delete prmNode;
+					}
+					else
+					{
+						attRoot == nullptr;
+					}
 				}
-				//Si el nodo no es hoja 
-				//Si el nodo tiene hijos izquierdos se trabajaran con ellos, de lo contrario se usaran los hijos derechos
-				if (prmNode->attLeft != nullptr) {
-					//Intercambio del dato del nodo a eliminar y del nodo más grande de la izquierda
-					
-					return;
+				else if (prmNode->attLeft != nullptr){
+
+				}else
+				{
 
 				}
-				else {
-					//Intercambio del dato del nodo a eliminar y del nodo más pequeño de la derecha
-					
-					return;
-				};
 			}
-			//Si el nodo NO contiene el dato
-			else {
-				//Llama recursivamente para eliminar un dato mayor al nodo dado 
-				if (prmNode->attData < prmData) {
-					opRemove(prmNode->attRight, prmData);
-				}
-				////Llama recursivamente para eliminar un dato menor al nodo dado 
-				else
-				{
-					opRemove(prmNode->attLeft, prmData);
-				};
-			};
+			else if (prmNode->attData > prmData) {
+				opRemove(prmNode, prmNode->attLeft, prmData);
+			}
+			else
+			{
+				opRemove(prmNode, prmNode->attRight, prmData);
+			}
+			/*			if (prmData < prmNode->attData)
+							prmNode->attLeft = opRemove(prmNode->attLeft, prmData);
+						else if (prmData > prmNode->attData)
+							prmNode->attRight = opRemove(prmNode->attRight, prmData);
+						else
+						{
+							if (prmNode->attLeft == nullptr)
+								return prmNode->attRight;
+
+							else if (prmNode->attRight == nullptr)
+								return prmNode->attLeft;
+
+							prmNode->attData = opGolargestOnTheLeft(prmNode->attLeft);
+							prmNode->attLeft = opRemove(prmNode->attLeft, prmNode->attData);
+						}*/
 		}
 #pragma endregion
 #pragma region private_ShowTree
@@ -189,24 +200,24 @@ namespace libBinaryTree {
 		*@param Dato raiz del que se iniciara la iteración
 		*@return Dato más grande de la izquierda de la raiz
 		*/
-		strNode* opGolargestOnTheLeft(strNode* prmNode) {
-			//si el nodo no tiene hijo izquierdo no retorna nada
-			if (prmNode->attLeft == nullptr) return prmNode;
+		T opGolargestOnTheLeft(strNode* prmNode) {
+			//si el nodo no tiene hijo izquierdo retorna el propio dato
+			if (prmNode->attLeft == nullptr) return prmNode->attData;
 			//si el nodo si tiene un hijo  izquierdo se mueve a este y va lo más a la derecha posible
 			prmNode = prmNode->attLeft;
-			return opGoExtremeRight(prmNode);
+			return opGoExtremeRight(prmNode)->attData;
 		}
 		/**
 		*@brief Va al dato más pequeño de la derecha del arbol o subarbol
 		*@param Dato raiz del que se iniciara la iteración
 		*@return Dato más pequeño de la derecha de la raiz
 		*/
-		strNode* opGoSmallestOnTheRight(strNode* prmNode) {
-			//si el nodo no tiene hijo izquierdo no retorna nada
-			if (prmNode->attRight == nullptr) return prmNode;
+		T opGoSmallestOnTheRight(strNode* prmNode) {
+			//si el nodo no tiene hijo izquierdo 
+			if (prmNode->attRight == nullptr) return prmNode->attData;
 			//si el nodo si tiene un hijo derecho se mueve a este y va lo más a la izquierda posible
 			prmNode = prmNode->attRight;
-			return opGoExtremeLeft(prmNode);
+			return opGoExtremeLeft(prmNode)->attData;
 		}
 #pragma endregion
 	public:
@@ -238,7 +249,7 @@ namespace libBinaryTree {
 		*/
 		void opRemove(T prmData) {
 			if (opItsEmpty())return;
-			opRemove(attRoot, prmData);
+			attRoot = opRemove(nullptr,attRoot,prmData);
 		}
 #pragma endregion
 #pragma region public_ShowTree
@@ -274,4 +285,4 @@ namespace libBinaryTree {
 #pragma endregion
 #pragma endregion
 	};
-};
+}
