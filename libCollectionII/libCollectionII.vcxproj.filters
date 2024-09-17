@@ -29,5 +29,8 @@
     <ClInclude Include="ADTBinaryExpressionTree.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="ADTBinaryHuffmanTree.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

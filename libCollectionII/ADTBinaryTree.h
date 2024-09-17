@@ -7,9 +7,9 @@ using std::endl;
 namespace libBinaryTree {
 	template <class T>
 	/*@brief Dato abstracto de un árbol binario*/
-	class ADTclsBinaryTree {
+	class ADTBinaryTree {
 #pragma region Attributes
-	private:
+	protected:
 		/*@brief Estructura de nodo binario*/
 		struct strNode {
 			T attData; /*!< Dato almacenado >*/
@@ -82,6 +82,10 @@ namespace libBinaryTree {
 			}
 	#pragma endregion
 	#pragma region Utilities
+		/*
+		@brief Va a el dato más a la izquierda del árbol
+		@param Dato raiz del árbol o subarbol
+		*/
 		strNode* opGoExtremeLeft(strNode* prmNode) {
 			//si el nodo no tiene un hijo izquierda se retorna a él mismo
 			if (prmNode->attLeft == nullptr) return prmNode;
@@ -122,8 +126,27 @@ namespace libBinaryTree {
 			prmNode = prmNode->attRight;
 			return opGoExtremeLeft(prmNode);
 		}
+		/*
+		*@brief Cópia profunda(completa) de un nodo 
+		*@param Nodo a copiar
+		*@return Nuevo nodo y nuevos descendientes
+		*/
+		strNode* opDeepCopy(const strNode* & prmNode) {
+			//
+		}
 	#pragma endregion
 	public:
+	#pragma region Builder
+		/*@brief Constructor por defecto del árbol binario
+		*/
+		ADTBinaryTree() :attRoot(nullptr) {}
+		/*@brief Constructor de cópia de un árbol binario
+		*@param árbol al que se le desea hacer una cópia
+		*/
+		ADTBinaryTree(const ADTBinaryTree & prmTree) {
+			if (prmTree.attRoot != nullptr) attRoot = opDeepCopy(prmTree.attRoot);
+		}
+#pragma endregion
 	#pragma region CRUD
 		virtual void opInsert(strNode* prmDadNode, strNode* prmNewNode) = 0;
 		virtual void opRemove(strNode* prmNode, T prmData) = 0;
@@ -168,7 +191,9 @@ namespace libBinaryTree {
 		/*
 		* @brief Cuenta la cantidad de nodos es el árbol (en dado caso contará nodos con datos nulos)
 		*/
-		int opWeightTree() {
+		int opWeightTree(strNode prmNode) {
+			if (prmNode == nullptr) return 0;
+			return 1 + opWeightTree(prmNode.attLeft) + opWeightTree(prmNode.attRight);
 		}
 	#pragma endregion
 #pragma endregion

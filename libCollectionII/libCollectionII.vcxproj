@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ADTBinaryExpressionTree.h" />
+    <ClInclude Include="ADTBinaryHuffmanTree.h" />
     <ClInclude Include="ADTBinarySearchTree.h" />
     <ClInclude Include="ADTBinaryTree.h" />
   </ItemGroup>
