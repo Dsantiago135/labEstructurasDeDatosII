@@ -16,7 +16,6 @@ namespace libBinaryTree {
 #pragma region Operations
 	protected:
 		bool opInsert(strNode* prmDadNode, strNode* prmNewNode) override {
-
 		}
 		void opRemove(strNode* prmNode, T prmData) override {
 		}

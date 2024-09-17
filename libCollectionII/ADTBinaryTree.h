@@ -37,6 +37,23 @@ namespace libBinaryTree {
 #pragma endregion
 #pragma region Operations
 	protected:
+	#pragma region CRUD
+		/**
+		* @brief Destruye un nodo y su sub arbol, liberando la memoria asociada
+		* @param n Nodo a destruir
+		*/
+		void opDestroy(strNode* prmNode) {
+			if (prmNode == nullptr) {
+				return;
+			}
+			// Eliminar primero el sub arbol derecho
+			destroy(prmNode->attRight);
+			// Eliminar el sub arbol izquierdo
+			destroy(prmNode->attLeft);
+			// Elimonar este nodo
+			delete prmNode;
+		}
+	#pragma endregion
 	#pragma region ShowTree
 		/**
 			* @brief Recorrido recursivo en preorden a partir de prmNode (prmNode->dato, prmNode->izq, prmNode->der)
@@ -102,37 +119,20 @@ namespace libBinaryTree {
 			//si el nodo si tiene un hijo derecho la función se llama a si misma dando como nodo raiz el hijo derecho
 			return opGoExtremeRight(prmNode->attRight);
 		}
-		/**
-		*@brief Va al dato más grande de la izquierda del arbol o subarbol
-		*@param Dato raiz del que se iniciara la iteración
-		*@return Dato más grande de la izquierda de la raiz
-		*/
-		strNode* opGolargestOnTheLeft(strNode* prmNode) {
-			//si el nodo no tiene hijo izquierdo no retorna nada
-			if (prmNode->attLeft == nullptr) return prmNode;
-			//si el nodo si tiene un hijo  izquierdo se mueve a este y va lo más a la derecha posible
-			prmNode = prmNode->attLeft;
-			return opGoExtremeRight(prmNode);
-		}
-		/**
-		*@brief Va al dato más pequeño de la derecha del arbol o subarbol
-		*@param Dato raiz del que se iniciara la iteración
-		*@return Dato más pequeño de la derecha de la raiz
-		*/
-		strNode* opGoSmallestOnTheRight(strNode* prmNode) {
-			//si el nodo no tiene hijo izquierdo no retorna nada
-			if (prmNode->attRight == nullptr) return prmNode;
-			//si el nodo si tiene un hijo derecho se mueve a este y va lo más a la izquierda posible
-			prmNode = prmNode->attRight;
-			return opGoExtremeLeft(prmNode);
-		}
 		/*
 		*@brief Cópia profunda(completa) de un nodo 
 		*@param Nodo a copiar
 		*@return Nuevo nodo y nuevos descendientes
 		*/
 		strNode* opDeepCopy(const strNode* & prmNode) {
-			//
+			if (prmNode == nullptr) return nullptr;
+			//Crear un nuevo nodo con los datos de prmNode
+			strNode* varNode = new strNode(prmNode->attData);
+			//Copia profunda del subarbol izquierdo
+			varNode->attLeft = opDeepCopy(prmNode->attLeft);
+			//Copia profunda del subarbol derecho
+			varNode->attRight = opDeepCopy(prmNode->attRight);
+			return varNode;
 		}
 	#pragma endregion
 	public:
@@ -150,7 +150,6 @@ namespace libBinaryTree {
 	#pragma region CRUD
 		virtual void opInsert(strNode* prmDadNode, strNode* prmNewNode) = 0;
 		virtual void opRemove(strNode* prmNode, T prmData) = 0;
-		virtual void opSearch(prmData) = 0;
 #pragma endregion
 	#pragma region ShowTree
 		/**
@@ -187,6 +186,7 @@ namespace libBinaryTree {
 		*@return La altura del árbol
 		*/
 		int opHeightTree() {
+			return = 0;
 		}
 		/*
 		* @brief Cuenta la cantidad de nodos es el árbol (en dado caso contará nodos con datos nulos)

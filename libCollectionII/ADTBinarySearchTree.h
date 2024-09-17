@@ -7,13 +7,14 @@ namespace libBinaryTree {
 	class clsBinarySearchTree : protected ADTBinaryTree {
 #pragma region Operations
 	protected:
+	#pragma region CRUD
 		/*
-		*@brief Intenta insertar un nuevo dato a partir de prmDadNode
-		* @param prmDadNode Potencial padre del nodo
-		* @param prmNewNode Nuevo nodo
-		* @return true si prmNewNode pudo ser insertado
-		*/
-		bool opInsert(strNode* prmDadNode, strNode* prmNewNode) override{
+*@brief Intenta insertar un nuevo dato a partir de prmDadNode
+* @param prmDadNode Potencial padre del nodo
+* @param prmNewNode Nuevo nodo
+* @return true si prmNewNode pudo ser insertado
+*/
+		bool opInsert(strNode* prmDadNode, strNode* prmNewNode) override {
 			// Verificar si el dato ya esta en el arbol
 			if (prmDadNode->attData == prmNewNode->attData) return false;
 
@@ -46,7 +47,7 @@ namespace libBinaryTree {
 		/*
 		*@brief Verificar si el nodo contiene al dato y lo elimina
 		*@param Nodo padre del que en dado caso se quitará la referencia
-		*@param Nodo que se eliminará 
+		*@param Nodo que se eliminará
 		*@param Dato a eliminar
 		*/
 		void opRemove(strNode* prmNode, T prmData) override {
@@ -88,7 +89,35 @@ namespace libBinaryTree {
 				};
 			};
 		}
+#pragma endregion
+	#pragma region Utilities
+		/**
+		*@brief Va al dato más grande de la izquierda del arbol o subarbol
+		*@param Dato raiz del que se iniciara la iteración
+		*@return Dato más grande de la izquierda de la raiz
+		*/
+		strNode* opGolargestOnTheLeft(strNode* prmNode) {
+			//si el nodo no tiene hijo izquierdo no retorna nada
+			if (prmNode->attLeft == nullptr) return prmNode;
+			//si el nodo si tiene un hijo  izquierdo se mueve a este y va lo más a la derecha posible
+			prmNode = prmNode->attLeft;
+			return opGoExtremeRight(prmNode);
+		}
+		/**
+		*@brief Va al dato más pequeño de la derecha del arbol o subarbol
+		*@param Dato raiz del que se iniciara la iteración
+		*@return Dato más pequeño de la derecha de la raiz
+		*/
+		strNode* opGoSmallestOnTheRight(strNode* prmNode) {
+			//si el nodo no tiene hijo izquierdo no retorna nada
+			if (prmNode->attRight == nullptr) return prmNode;
+			//si el nodo si tiene un hijo derecho se mueve a este y va lo más a la izquierda posible
+			prmNode = prmNode->attRight;
+			return opGoExtremeLeft(prmNode);
+		}
+#pragma endregion 	
 	public:
+	#pragma region CRUD
 		/**
 		* @brief Insertar un nuevo dato en el arbol
 		* @param prmData Nuevo dato a insertar
@@ -118,6 +147,7 @@ namespace libBinaryTree {
 			if (opItsEmpty())return;
 			opRemove(attRoot, prmData);
 		}
+#pragma endregion
 #pragma endregion
 	};
 }
