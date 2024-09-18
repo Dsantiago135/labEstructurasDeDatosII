@@ -25,13 +25,13 @@ namespace libBinaryTree {
 
 		cout << (varTree.opItsEmpty() ? "El arbol esta vacio" : "El arbol no esta vacio") << endl;
 		//Imprimir en preorden
-		varTree.opPreOrder();
+		varTree.opShowPreOrder();
 		cout << endl;
 
-		varTree.opInOrder();
+		varTree.opShowInOrder();
 		cout << endl;
 
-		varTree.opPosOrder();
+		varTree.opShowPosOrder();
 		cout << endl;
 
 		return 0;

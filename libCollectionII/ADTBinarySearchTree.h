@@ -107,7 +107,7 @@ namespace libBinaryTree {
 			//si el nodo si tiene un hijo  izquierdo se mueve a este y va lo más a la derecha posible
 			prmNode = prmNode->attLeft;
 			return opGoExtremeRight(prmNode);
-		};
+		}
 		/**
 		*@brief Va al dato más pequeño de la derecha del arbol o subarbol
 		*@param Dato raiz del que se iniciara la iteración
@@ -119,7 +119,7 @@ namespace libBinaryTree {
 			//si el nodo si tiene un hijo derecho se mueve a este y va lo más a la izquierda posible
 			prmNode = prmNode->attRight;
 			return opGoExtremeLeft(prmNode);
-		};
+		}
 #pragma endregion 	
 	public:
 	#pragma region CRUD
