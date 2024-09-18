@@ -1,10 +1,14 @@
 #pragma once
 #include <iostream>
+#include "ADTBinaryTree.h"
 
+using libBinaryTree::ADTBinaryTree;
 namespace libBinaryTree {
 	template <class T>
 	/*@brief Árbol binario de Huffman (es una subclase de árbol binario)*/
-	class clsBinaryHuffmanTree : protected ADTBinaryTree {
+	class clsBinaryHuffmanTree : protected ADTBinaryTree<T> {
+	protected:
+		using typename ADTBinaryTree<T>::strNode;
 #pragma region Attribute
 	private:
 		/*@brief Estrcutura para dato Huffman*/

@@ -148,7 +148,7 @@ namespace libBinaryTree {
 		}
 #pragma endregion
 	#pragma region CRUD
-		virtual void opInsert(strNode* prmDadNode, strNode* prmNewNode) = 0;
+		virtual bool opInsert(strNode* prmDadNode, strNode* prmNewNode) = 0;
 		virtual void opRemove(strNode* prmNode, T prmData) = 0;
 #pragma endregion
 	#pragma region ShowTree
@@ -186,7 +186,7 @@ namespace libBinaryTree {
 		*@return La altura del árbol
 		*/
 		int opHeightTree() {
-			return = 0;
+			return 0;
 		}
 		/*
 		* @brief Cuenta la cantidad de nodos es el árbol (en dado caso contará nodos con datos nulos)

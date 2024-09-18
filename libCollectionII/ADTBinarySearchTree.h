@@ -1,10 +1,15 @@
 #pragma once
 #include <iostream>
+#include "ADTBinaryTree.h"
+
+using libBinaryTree::ADTBinaryTree;
 
 namespace libBinaryTree {
 	template <class T>
 	/*@brief Árbol binario de busqueda (es una subclase de árbol binario)*/
-	class clsBinarySearchTree : protected ADTBinaryTree {
+	class clsBinarySearchTree : public ADTBinaryTree<T> {
+	protected:
+		using typename ADTBinaryTree<T>::strNode;
 #pragma region Operations
 	protected:
 	#pragma region CRUD
@@ -14,7 +19,7 @@ namespace libBinaryTree {
 * @param prmNewNode Nuevo nodo
 * @return true si prmNewNode pudo ser insertado
 */
-		bool opInsert(strNode* prmDadNode, strNode* prmNewNode) override {
+		bool opInsert(strNode* prmDadNode, strNode* prmNewNode)override {
 			// Verificar si el dato ya esta en el arbol
 			if (prmDadNode->attData == prmNewNode->attData) return false;
 
@@ -50,7 +55,7 @@ namespace libBinaryTree {
 		*@param Nodo que se eliminará
 		*@param Dato a eliminar
 		*/
-		void opRemove(strNode* prmNode, T prmData) override {
+		void opRemove(strNode* prmNode, T prmData)override {
 			//Si el nodo es nulo el dato no está en el árbol
 			if (prmNode == nullptr) return;
 			//Si el nodo SI contiene el dato
@@ -102,7 +107,7 @@ namespace libBinaryTree {
 			//si el nodo si tiene un hijo  izquierdo se mueve a este y va lo más a la derecha posible
 			prmNode = prmNode->attLeft;
 			return opGoExtremeRight(prmNode);
-		}
+		};
 		/**
 		*@brief Va al dato más pequeño de la derecha del arbol o subarbol
 		*@param Dato raiz del que se iniciara la iteración
@@ -114,7 +119,7 @@ namespace libBinaryTree {
 			//si el nodo si tiene un hijo derecho se mueve a este y va lo más a la izquierda posible
 			prmNode = prmNode->attRight;
 			return opGoExtremeLeft(prmNode);
-		}
+		};
 #pragma endregion 	
 	public:
 	#pragma region CRUD
