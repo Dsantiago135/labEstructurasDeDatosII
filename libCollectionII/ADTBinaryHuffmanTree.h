@@ -13,18 +13,24 @@ namespace libBinaryTree {
 	private:
 		/*@brief Estrcutura para dato Huffman*/
 		struct strHuffman {
-			T attData; /*!< Dato almacenado >*/
-			int attRef; /*!< Número de referencia del dato>*/
+			T attData; /*!< caracter almacenado >*/
+			int attRef; /*!< Frecuencua del caracter en la palabra>*/
+			string attCode; /*!< Código Huffman asociado al caracter>*/
 		};
+		string attOriginalWord;
 #pragma endregion 
 #pragma region Operations
 	protected:
-		bool opInsert(strNode* prmDadNode, strNode* prmNewNode) override {
-		}
 		void opRemove(strNode* prmNode, T prmData) override {
 		}
 	public:
-		void opInsert(T prmData) {
+		/**
+		*@brief Constructor por defecto de un árbol binario de Huffman
+		*@param Palabra raíz de la cual saldra el código Huffman
+		*/
+		clsBinaryHuffmanTree(string prmWord) {
+			attOriginalWord = prmWord;
+
 		}
 		void opRemove(T prmData) {
 		}
