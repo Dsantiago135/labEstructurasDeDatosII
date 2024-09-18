@@ -17,12 +17,10 @@ namespace libBinaryTree {
 			int attRef; /*!< Frecuencua del caracter en la palabra>*/
 			string attCode; /*!< Código Huffman asociado al caracter>*/
 		};
+		/*!< Palabra de la cual se formó el árbol Huffman >*/
 		string attOriginalWord;
 #pragma endregion 
 #pragma region Operations
-	protected:
-		void opRemove(strNode* prmNode, T prmData) override {
-		}
 	public:
 		/**
 		*@brief Constructor por defecto de un árbol binario de Huffman
@@ -31,8 +29,6 @@ namespace libBinaryTree {
 		clsBinaryHuffmanTree(string prmWord) {
 			attOriginalWord = prmWord;
 
-		}
-		void opRemove(T prmData) {
 		}
 #pragma endregion
 	};
