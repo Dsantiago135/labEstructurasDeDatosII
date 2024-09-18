@@ -3,10 +3,8 @@
 
 using std::cout;
 using std::endl;
-
 using  libBinaryTree::clsBinarySearchTree; 
 
-namespace libBinaryTree {
 	int main(int argc, char* argv[]) {
 
 		//Crear una instancia de arbol binario
@@ -36,4 +34,3 @@ namespace libBinaryTree {
 
 		return 0;
 	};
-}

@@ -132,13 +132,13 @@ namespace libBinaryTree {
 			// Crear un nuevo nodo que contiene el dato
 			strNode* varNewNode = new strNode(prmData);
 
-			if (opItsEmpty()) {
+			if (this->opItsEmpty()) {
 				// Si el arbol esta vacio, varNewNode se convierte en la raiz
-				attRoot = varNewNode;
+				this->attRoot = varNewNode;
 			}
 			else {
 				// Tratar de insertar el nodo a partir de la raiz
-				if (!opInsert(attRoot, varNewNode)) {
+				if (!opInsert(this->attRoot, varNewNode)) {
 					//Liberar la memoria del nodo si no se puede insertar
 					delete varNewNode;
 				}
@@ -149,8 +149,8 @@ namespace libBinaryTree {
 		* @param Dato a eliminar
 		*/
 		void opRemove(T prmData) {
-			if (opItsEmpty())return;
-			opRemove(attRoot, prmData);
+			if (this->opItsEmpty())return;
+			opRemove(this->attRoot, prmData);
 		}
 #pragma endregion
 #pragma endregion
