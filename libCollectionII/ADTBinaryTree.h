@@ -185,8 +185,15 @@ namespace libBinaryTree {
 		*@brief Cuenta cual es la altura del árbol
 		*@return La altura del árbol
 		*/
-		int opHeightTree() {
-			return 0;
+		int opHeightTree(strNode* prmNode) {
+			if (prmNode == nullptr) return 0;
+			if (prmNode->opItsLeaf()) return 1;
+
+			int varHeightLeft = opHeightTree(prmNode->attLeft);
+			int varHeightRight = opHeightTree(prmNode->attRight);
+
+			if (varHeightLeft > varHeightRight) return varHeightLeft + 1;
+			else return varHeightRight + 1;
 		}
 		/*
 		* @brief Cuenta la cantidad de nodos es el árbol (en dado caso contará nodos con datos nulos)
