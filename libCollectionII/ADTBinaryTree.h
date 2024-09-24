@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <algorithm>
 
 using std::cout;
 using std::endl;
@@ -150,6 +151,10 @@ namespace libBinaryTree {
 	#pragma region CRUD
 		virtual bool opInsert(strNode* prmDadNode, strNode* prmNewNode) = 0;
 		virtual void opRemove(strNode* prmNode, T prmData) = 0;
+		virtual ~ADTBinaryTree() {
+			opDestroy(attRoot);
+		}
+
 #pragma endregion
 	#pragma region ShowTree
 		/**
@@ -194,7 +199,10 @@ namespace libBinaryTree {
 		*/
 		int opWeightTree(strNode* prmNode) {
 			if (prmNode == nullptr) return 0;
-			return 1 + opWeightTree(prmNode.attLeft) + opWeightTree(prmNode.attRight);
+			return 1 + opWeightTree(prmNode->attLeft) + opWeightTree(prmNode->attRight);
+		}
+		strNode* opGetRoot() {
+			return attRoot;
 		}
 	#pragma endregion
 #pragma endregion

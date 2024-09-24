@@ -2,127 +2,128 @@
 #include <iostream>
 #include "ADTBinaryTree.h"
 #include <vector>
+#include <queue>
+#include <string>
 
+using std::cout;
+using std::endl;
 using std::vector;
 using std::string;
+using std::priority_queue;
+using std::pair;
 using libBinaryTree::ADTBinaryTree;
 
 namespace libBinaryTree {
 	template <class T>
-	/*@brief Árbol binario de Huffman (es una subclase de árbol binario)*/
 	class clsBinaryHuffmanTree : public ADTBinaryTree<T> {
 	protected:
-		using typename ADTBinaryTree<T>::strNode;
-#pragma region Attribute
-	private:
-		/*@brief Estrcutura para dato Huffman*/
+		using strNode = typename ADTBinaryTree<T>::strNode;
+	protected:
 		struct strHuffman {
-			T attData; /*!< caracter almacenado >*/
-			int attFrequency; /*!< Frecuencua del caracter en la palabra>*/
-			string attCode; /*!< Código Huffman asociado al caracter>*/
+			T attCharacter; /*!< Caracter almacenado >*/
+			int attFrequency; /*!< Frecuencia del caracter >*/
+			string attCode; /*!< Código Huffman asociado al caracter >*/
 
-			strHuffman(T prmData,int prmFrequency) :attData(prmData), attFrequency(prmFrequency), attCode("") {}
+			strHuffman(T prmData, int prmFrequency) : attCharacter(prmData), attFrequency(prmFrequency), attCode("") {}
+			//@brief sobrecarga de operador para comparar la frecuencia y facilitar el ordenamiento
+			bool operator > (const strHuffman& prmOther) const {
+				return attFrequency > prmOther.attFrequency;
+			}
 		};
-		/*!< Palabra de la cual se formó el árbol Huffman >*/
 		string attOriginalWord;
-#pragma endregion 
-#pragma region Operations
 	public:
-		/**
-		*@brief Constructor por defecto de un árbol binario de Huffman
-		*@param Palabra raíz de la cual saldra el código Huffman
+		/*
+		*@brief Constructor por defecto de códigos Huffman
+		*@param Palabra de la cual se crearan los codigo Huffman
 		*/
 		clsBinaryHuffmanTree(string prmWord) {
+
 			attOriginalWord = prmWord;
-			vector<strHuffman> varFrequencyArray; // Array para guardar las frecuencias
-			opFrequencyCharacter(prmWord, varFrequencyArray, 0); // Llenar el array con frecuencias
+			vector<strHuffman> varFrequencyArray;
+			opFrequencyCharacter(prmWord, varFrequencyArray, 0);
 
-			// Ordenar el array de frecuencias
-			opMergeSort(varFrequencyArray, 0, varFrequencyArray.size() - 1);
+			// Crear el árbol de Huffman
+			strNode* varHuffmanTreeRoot = opGenerateTree(varFrequencyArray);
+			this->attRoot = varHuffmanTreeRoot;
 
-			
+			// Generar los códigos de Huffman
+			opGenerateCode(varHuffmanTreeRoot, "");
 		}
-		/*@brief Crea el código de Huffman de todos los caracteres del árbol
-		*@param Nodo actual
-		*@param Código del padre
-		*@param True si el siguiente nodo está a la izquierda del nodo actual ó false si esta a la derecha
+		/*
+		*@brief Determina los caracteres que componen una palabra y con cuanta frecuencia aparece el caracter en la palabra
+		*@param Palabra de de la cual se sacará el vector de caracteres y su frecuencia 
+		*/
+		void opFrequencyCharacter(const string& prmWord, vector<strHuffman>& prmArray, int prmIndex) {
+			//  Caso base para detener recursividad (es el ultimo caracter)
+			if (prmIndex >= prmWord.length()) return;
+
+			char varCurrentCharacter = prmWord[prmIndex];
+			bool varFound = false;
+			
+			// Recorre la palabra para determinar la frecuencia del caracter actual
+			for (size_t i = 0; i < prmArray.size(); i++) {
+				if (prmArray[i].attCharacter == varCurrentCharacter) {
+					prmArray[i].attFrequency++;
+					varFound = true;
+					break;
+				}
+			}
+			
+			//Si no se encontro el caracter en el arreglo de frecuencias, crea un dato Huffman y lo agrega al arreglo
+			if (!varFound) {
+				prmArray.emplace_back(varCurrentCharacter, 1);
+			}
+
+			opFrequencyCharacter(prmWord, prmArray, prmIndex + 1);
+		}
+		/*
+		*@brief Genera un árbol de Huffman apartir de un vector
+		*@param Vector de con los datos Huffman con los cuales se creara el árbol
+		*/
+		strNode* opGenerateTree(vector<strHuffman>& prmArray) {
+			priority_queue<strHuffman, vector<strHuffman>, std::greater<strHuffman>> varFrequencyQueue;
+
+			// Agregar todos los elementos al priority queue
+			for (const auto& varHuffmanData : prmArray) {
+				varFrequencyQueue.push(varHuffmanData);
+			}
+
+			// Crear el árbol de Huffman
+			while (varFrequencyQueue.size() > 1) {
+				strHuffman varNodeLeft = varFrequencyQueue.top(); varFrequencyQueue.pop();
+				strHuffman varNodeRight = varFrequencyQueue.top(); varFrequencyQueue.pop();
+				strHuffman varNodeCombined('\0', varNodeLeft.attFrequency + varNodeRight.attFrequency);
+
+				strNode* newNode = new strNode(varNodeCombined);
+				newNode->attLeft = new strNode(varNodeLeft);
+				newNode->attRight = new strNode(varNodeRight);
+				varFrequencyQueue.push(varNodeCombined);
+			}
+
+			// El nodo raíz del árbol de Huffman
+			return new strNode(varFrequencyQueue.top());
+		}
+		/*
+		* @brief Genera los códigos de cada caracter Huffman apartir de un árbol Huffman
+		* @param Nodo raiz del árbol Huffman
+		* @param Código del padre del Nodo (usado para recursividad) 
 		*/
 		void opGenerateCode(strNode* prmNode, string prmDadCode) {
 			if (prmNode == nullptr) return;
 
-			// Concatenar el código
-			prmNode->attCode = prmDadCode;
-
-			// Llamar recursivamente para el hijo izquierdo (agregar "0") y derecho (agregar "1")
-			opGenerateCode(prmNode->attLeft, prmNode->attCode + "0");
-			opGenerateCode(prmNode->attRight, prmNode->attCode + "1");
-		}
-		/*
-		@brief
-		@param
-		@param
-		@param
-		*/
-		void opFrequencyCharacter (const string& prmWord, vector <strHuffman> & prmArray, int prmIndex) {
-			// Caso base: fin de la palabra
-			if (prmIndex >= prmWord.length()) return;
-		//@param variable la cual guarda el caracter con el que se está trabajando actualmente
-		char varCurrentCharacter = prmWord[prmIndex];
-
-		//@param variable que hace referencia si el caracter se encontró o no
-		bool varFound = false;
-
-		// Buscar si el carácter ya existe en el arreglo
-		for (size_t i = 0; i < prmArray.size(); i++) {
-			if (prmArray[i].attData == varCurrentCharacter) {
-				// Si el carácter ya está, incrementar su frecuencia
-				prmArray[i].attFrequency++;
-				varFound = true;
-				break;
-			}
-		}
-
-		// Si el carácter no fue encontrado, añadir un nuevo nodo
-		if (!varFound) {
-			//@param nuevo caracter a guardar en el arreglo, y la frecuencia de 1
-			strHuffman varNewData = {varCurrentCharacter, 1};
-			prmArray.push_back(varNewData);
-		}
-
-		// Llamada recursiva al siguiente carácter
-		opFrequencyCharacter(prmWord, prmArray, prmIndex+ 1);
-	}
-		void opMergeSort (vector<int>& prmArray, int prmLeft, int prmRight) {
-			if (prmLeft < prmRight) {
-				int varMid = prmLeft + (prmRight - prmLeft) / 2; // Encuentra el punto medio
-
-				opMergeSort(prmArray, prmLeft, varMid); // Ordenar la mitad izquierda
-				opMergeSort(prmArray, varMid + 1, prmRight); // Ordenar la mitad derecha
-				opMerge(prmArray, prmLeft, varMid, prmRight); // Combinar las mitades
-			}
-		}
-		void opMerge(vector<int>& prmArray, int prmLeft, int prmMid, int prmRight) {
-			// Crear vectores temporales para las mitades izquierda y derecha
-			vector<int> varLeftArray(prmArray.begin() + prmLeft, prmArray.begin() + prmMid + 1);
-			vector<int> varRightprmArray(prmArray.begin() + prmMid + 1, prmArray.begin() + prmRight + 1);
-
-			int i = 0, j = 0, k = prmLeft;
-
-			// Combinar los subprmArrayeglos
-			while (i < varLeftArray.size() && j < varRightprmArray.size()) {
-				prmArray[k++] = (varLeftArray[i] <= varRightprmArray[j]) ? varLeftArray[i++] : varRightprmArray[j++];
+			if (prmNode->opItsLeaf()) {
+				prmNode->attData.attCode = prmDadCode;
 			}
 
-			// Copiar los elementos restantes de varLeftArray (si los hay)
-			while (i < varLeftArray.size()) {
-				prmArray[k++] = varLeftArray[i++];
-			}
-
-			// Copiar los elementos restantes de rightprmArray (si los hay)
-			while (j < varRightprmArray.size()) {
-				prmArray[k++] = varRightprmArray[j++];
-			}
+			opGenerateCode(prmNode->attLeft, prmDadCode + "0");
+			opGenerateCode(prmNode->attRight, prmDadCode + "1");
 		}
-#pragma endregion
+		/*@brief Implementación basica para cumpli herencia*/
+		virtual bool opInsert(strNode* prmDadNode, strNode* prmNewNode) override {
+			return false;
+		}
+		/*@brief Implementación basica para cumpli herencia*/
+		virtual void opRemove(strNode* prmNode, T prmData) override {
+		}
 	};
 }
