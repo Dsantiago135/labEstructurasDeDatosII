@@ -28,7 +28,7 @@ namespace libBinaryTree {
 			*@param Dato a comparar
 			*/
 			bool opContain(T prmData) {
-				return(this->attData = prmData);
+				return(this->attData == prmData);
 			}
 #pragma endregion
 		};
@@ -47,9 +47,9 @@ namespace libBinaryTree {
 				return;
 			}
 			// Eliminar primero el sub arbol derecho
-			destroy(prmNode->attRight);
+			opDestroy(prmNode->attRight);
 			// Eliminar el sub arbol izquierdo
-			destroy(prmNode->attLeft);
+			opDestroy(prmNode->attLeft);
 			// Elimonar este nodo
 			delete prmNode;
 		}
@@ -187,18 +187,12 @@ namespace libBinaryTree {
 		*/
 		int opHeightTree(strNode* prmNode) {
 			if (prmNode == nullptr) return 0;
-			if (prmNode->opItsLeaf()) return 1;
-
-			int varHeightLeft = opHeightTree(prmNode->attLeft);
-			int varHeightRight = opHeightTree(prmNode->attRight);
-
-			if (varHeightLeft > varHeightRight) return varHeightLeft + 1;
-			else return varHeightRight + 1;
+			return 1 + std::max(opHeightTree(prmNode->attLeft), opHeightTree(prmNode->attRight));
 		}
 		/*
 		* @brief Cuenta la cantidad de nodos es el árbol (en dado caso contará nodos con datos nulos)
 		*/
-		int opWeightTree(strNode prmNode) {
+		int opWeightTree(strNode* prmNode) {
 			if (prmNode == nullptr) return 0;
 			return 1 + opWeightTree(prmNode.attLeft) + opWeightTree(prmNode.attRight);
 		}
