@@ -9,12 +9,37 @@ using libBinaryTree::ADTBinaryTree;
 namespace libBinaryTree {
     template <class T>
     /*@brief Árbol binario de Expresiones (es una subclase de árbol binario)*/
-    class clsBinaryExpressionTree : public ADTBinaryTree<T> {
+    class clsBinaryExpressionTree {
+#pragma region Attributes
     protected:
-        using typename ADTBinaryTree<T>::strNode;
+        /*@brief Estructura de nodo binario*/
+        struct strNode {
+            T attData; /*!< Dato almacenado >*/
+            strNode* attLeft; /*!< Referencia al hijo izquierdo >*/
+            strNode* attRight; /*!< Referencia al hijo derecho >*/
+#pragma region OperationsOfStrNode
+            strNode(T prmData) :attData(prmData), attLeft(nullptr), attRight(nullptr) {}
+            /**
+            *@brief Verifica si el nodo una hoja
+            */
+            bool opItsLeaf() {
+                return(attLeft == nullptr && attRight == nullptr);
+            }
+            /**
+            *@brief Verifica si el dato esta contenido en el nodo
+            *@param Dato a comparar
+            */
+            bool opContain(T prmData) {
+                return(this->attData == prmData);
+            }
+#pragma endregion
+        };
+        /*@brief Nodo Raiz del árbol*/
+        strNode* attRoot = nullptr;
+#pragma endregion
 
     public:
-        virtual void opInsert(T prmData) override {
+        virtual void opInsert(T prmData)  {
             // Implementación básica: inserta como un nuevo nodo
             strNode* varNewNode = new strNode(prmData);
             if (this->opItsEmpty()) {
@@ -33,12 +58,10 @@ namespace libBinaryTree {
                 }
             }
         }
-
-        virtual void opRemove(T prmData) override {
+        virtual void opRemove(T prmData) {
             // Implementación básica: no se puede eliminar un nodo en esta versión
             cout << "Eliminar " << prmData << " no está implementado en este árbol de expresiones." << endl;
         }
-
         void opShowTree() {
             // Mostrar el árbol como una expresión infija
             std::stack<strNode*> stack;

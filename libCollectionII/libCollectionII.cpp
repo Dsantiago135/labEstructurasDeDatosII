@@ -2,6 +2,7 @@
 #include "ADTBinarySearchTree.h"
 #include "ADTBinaryExpressionTree.h"
 #include "ADTBinaryHuffmanTree.h"
+using namespace libBinaryTree;
 
 int main() {
     // Pruebas para clsBinarySearchTree
@@ -33,16 +34,10 @@ int main() {
     expressionTree.opShowTree();
     std::cout << std::endl;
 
-    // Pruebas para clsBinaryHuffmanTree
-    std::cout << "=== Árbol de Huffman ===" << std::endl;
-    libBinaryTree::clsBinaryHuffmanTree<char> huffmanTree;
-    huffmanTree.opInsert('a', 5);
-    huffmanTree.opInsert('b', 9);
-    huffmanTree.opInsert('c', 12);
-
-    std::cout << "Mostrar árbol de Huffman (preorden): ";
+    std::cout << "=== Arbol de Huffman ===" << std::endl;
+    clsBinaryHuffmanTree huffmanTree = clsBinaryHuffmanTree("supercalifragilisticoespialidoso");
+    std::cout << "Mostrar caracteres y codigos: ";
     huffmanTree.opShowTree();
     std::cout << std::endl;
-
     return 0;
 }

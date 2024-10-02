@@ -7,9 +7,34 @@ using libBinaryTree::ADTBinaryTree;
 namespace libBinaryTree {
 	template <class T>
 	/*@brief Árbol binario de busqueda (es una subclase de árbol binario)*/
-	class clsBinarySearchTree : public ADTBinaryTree<T> {
+	class clsBinarySearchTree {
+#pragma region Attributes
 	protected:
-		using typename ADTBinaryTree<T>::strNode;
+		/*@brief Estructura de nodo binario*/
+		struct strNode {
+			T attData; /*!< Dato almacenado >*/
+			strNode* attLeft; /*!< Referencia al hijo izquierdo >*/
+			strNode* attRight; /*!< Referencia al hijo derecho >*/
+#pragma region OperationsOfStrNode
+			strNode(T prmData) :attData(prmData), attLeft(nullptr), attRight(nullptr) {}
+			/**
+			*@brief Verifica si el nodo una hoja
+			*/
+			bool opItsLeaf() {
+				return(attLeft == nullptr && attRight == nullptr);
+			}
+			/**
+			*@brief Verifica si el dato esta contenido en el nodo
+			*@param Dato a comparar
+			*/
+			bool opContain(T prmData) {
+				return(this->attData == prmData);
+			}
+#pragma endregion
+		};
+		/*@brief Nodo Raiz del árbol*/
+		strNode* attRoot = nullptr;
+#pragma endregion
 #pragma region Operations
 	protected:
 	#pragma region CRUD
@@ -121,6 +146,50 @@ namespace libBinaryTree {
 			return opGoExtremeLeft(prmNode);
 		}
 #pragma endregion 	
+	#pragma region ShowTree
+		/**
+			* @brief Recorrido recursivo en preorden a partir de prmNode (prmNode->dato, prmNode->izq, prmNode->der)
+			* @param prmNode Nodo de inicio del recorrido
+			*/
+		void opPreOrder(strNode* prmNode) {
+			if (prmNode == nullptr) {
+				return;
+			}
+			cout << " " << prmNode->attData;
+			//Invocar recursivamente 
+			opPreOrder(prmNode->attLeft);
+			opPreOrder(prmNode->attRight);
+		}
+		/**
+			* @brief Recorrido recursivo en inorden a partir de prmNode (prmNode->izq, prmNode->dato, prmNode->der)
+			* @param prmNode Nodo de inicio del recorrido
+			*/
+		void opInOrder(strNode* prmNode) {
+			if (prmNode == nullptr) {
+				return;
+			}
+
+			//Invocar recursivamente inorden en el hijo izquierdo
+			opInOrder(prmNode->attLeft);
+			cout << " " << prmNode->attData;
+			//Invocar recursivamente inorden en el hijo derecho
+			opInOrder(prmNode->attRight);
+		}
+		/**
+			*@brief Recorrido recursivo en Posorden a partir de prmNode (prmNode->izq, prmNode->der, prmNode->dato)
+			*@param prmNode Nodo de inicio del recorrido
+			*/
+		void opPosOrder(strNode* prmNode) {
+			if (prmNode == nullptr) {
+				return;
+			}
+			//Invocar recursivamente inorden en el hijo izquierdo
+			opPosOrder(prmNode->attLeft);
+			//Invocar recursivamente inorden en el hijo derecho
+			opPosOrder(prmNode->attRight);
+			cout << " " << prmNode->attData;
+		}
+#pragma endregion
 	public:
 	#pragma region CRUD
 		/**
@@ -151,6 +220,55 @@ namespace libBinaryTree {
 		void opRemove(T prmData) {
 			if (this->opItsEmpty())return;
 			opRemove(this->attRoot, prmData);
+		}
+#pragma endregion
+	#pragma region ShowTree
+		/**
+			* @brief Imprime el recorrido en preorden (dato, izq, der)
+			*/
+		void opShowPreOrder() {
+
+			opPreOrder(attRoot);
+		}
+		/**
+			* @brief Imprime el recorrido en inorden (izq, dato, der)
+			*/
+		void opShowInOrder() {
+
+			opInOrder(attRoot);
+		}
+		/**
+			* @brief Imprime el recorrido en posorden (izq, der, dato)
+			*/
+		void opShowPosOrder() {
+			opPosOrder(attRoot);
+		}
+#pragma endregion
+	#pragma region Query
+		/**
+				* @brief Permite verificar si el arbol esta vacio
+				* @return true si el arbol se encuentra vacio
+				*/
+		bool opItsEmpty() {
+			return (attRoot == nullptr);
+		}
+		/*
+		*@brief Cuenta cual es la altura del árbol
+		*@return La altura del árbol
+		*/
+		int opHeightTree(strNode* prmNode) {
+			if (prmNode == nullptr) return 0;
+			return 1 + std::max(opHeightTree(prmNode->attLeft), opHeightTree(prmNode->attRight));
+		}
+		/*
+		* @brief Cuenta la cantidad de nodos es el árbol (en dado caso contará nodos con datos nulos)
+		*/
+		int opWeightTree(strNode* prmNode) {
+			if (prmNode == nullptr) return 0;
+			return 1 + opWeightTree(prmNode->attLeft) + opWeightTree(prmNode->attRight);
+		}
+		strNode* opGetRoot() {
+			return attRoot;
 		}
 #pragma endregion
 #pragma endregion
