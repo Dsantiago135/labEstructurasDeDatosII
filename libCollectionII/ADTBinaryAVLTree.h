@@ -98,7 +98,6 @@ namespace libBinaryTree {
 
 	protected:
 		using typename clsBinarySearchTree<strAVLData<T>> ::strNode; /*!< Tipo para el nodo */
-
 		/**
 		* @brief Se invoca cuando un nodo ha sido eliminado
 		* @param prmFather Padre el nodo eliminado

@@ -4,6 +4,7 @@
 #include <queue>
 #include <string>
 #include <functional>
+#include "ADTBinaryTree.h"
 
 using std::cout;
 using std::endl;
@@ -13,74 +14,30 @@ using std::priority_queue;
 using std::pair;
 
 namespace libBinaryTree {
-    class clsBinaryHuffmanTree {
-    public:
-#pragma region Attributes
-        /*@brief Estructura de dato Huffman*/
-        struct strHuffman {
-            char attCharacter; /*!< Caracter almacenado >*/
-            int attFrequency; /*!< Frecuencia del caracter >*/
-            string attCode; /*!< Código Huffman asociado al caracter >*/
+    /*@brief Estructura de dato Huffman*/
+    struct strHuffman {
+        char attCharacter; /*!< Caracter almacenado >*/
+        int attFrequency; /*!< Frecuencia del caracter >*/
+        string attCode; /*!< Código Huffman asociado al caracter >*/
 
-            /**
-             * @brief Constructor de la estructura strHuffman
-             * @param prmData Caracter almacenado
-             * @param prmFrequency Frecuencia del caracter en la palabra
-             */
-            strHuffman(char prmData, int prmFrequency) : attCharacter(prmData), attFrequency(prmFrequency), attCode("") {}
-            /**
-             * @brief Sobrecarga del operador "mayor que" para comparar la frecuencia de dos objetos strHuffman
-             * @param prmOther Objeto strHuffman a comparar
-             * @return True si la frecuencia del objeto actual es mayor que la del objeto prmOther
-             */
-            bool operator > (const strHuffman& prmOther) const {
-                return attFrequency > prmOther.attFrequency;
-            }
-        };
-        /*@brief Estructura de nodo binario*/
-        struct strNode {
-            strHuffman attData; /*!< Dato almacenado (frecuencia y caracter) >*/
-            strNode* attLeft; /*!< Referencia al hijo izquierdo >*/
-            strNode* attRight; /*!< Referencia al hijo derecho >*/
-
-            /**
-             * @brief Constructor de la estructura strNode
-             * @param prmData Dato de tipo strHuffman que se almacenará en el nodo
-             */
-            strNode(strHuffman prmData) : attData(prmData), attLeft(nullptr), attRight(nullptr) {}
-            /**
-             * @brief Verifica si el nodo es una hoja (no tiene hijos)
-             * @return True si el nodo es una hoja
-             */
-            bool opItsLeaf() {
-                return (attLeft == nullptr && attRight == nullptr);
-            }
-            /**
-             * @brief Muestra la información del nodo: el carácter, código y frecuencia almacenados
-             */
-            void opContain() {
-                cout << endl << "caracter:" << attData.attCharacter;
-                cout << "   Código del caracter: " << attData.attCode;
-                cout << "   Frecuencia del caracter: " << attData.attFrequency;
-            }
-            /**
-             * @brief Asigna un código Huffman al dato almacenado en el nodo
-             * @param prmCode Código Huffman que se asignará al nodo
-             */
-            void opSetCode(string prmCode) {
-                this->attData.attCode = prmCode;
-            }
-            /**
-             * @brief Asigna un carácter al nodo
-             * @param prmData Carácter que se asignará al nodo
-             */
-            void opSetData(char prmData) {
-                this->attData.attCharacter = prmData;
-            }
-        };
-        string attOriginalWord; /*!< Palabra original que se codificará >*/
-        strNode* attRoot = nullptr; /*!< Raíz del árbol de Huffman >*/
-#pragma endregion
+        /**
+         * @brief Constructor de la estructura strHuffman
+         * @param prmData Caracter almacenado
+         * @param prmFrequency Frecuencia del caracter en la palabra
+         */
+        strHuffman(char prmData, int prmFrequency) : attCharacter(prmData), attFrequency(prmFrequency), attCode("") {}
+        /**
+         * @brief Sobrecarga del operador "mayor que" para comparar la frecuencia de dos objetos strHuffman
+         * @param prmOther Objeto strHuffman a comparar
+         * @return True si la frecuencia del objeto actual es mayor que la del objeto prmOther
+         */
+        bool operator > (const strHuffman& prmOther) const {
+            return attFrequency > prmOther.attFrequency;
+        }
+    };
+    class clsBinaryHuffmanTree : public ADTBinaryTree<strHuffman>{
+    using typename ADTBinaryTree<strHuffman>::strNode;
+    string attOriginalWord; /*!< Palabra original que se codificará >*/
 
     public:
         /**
@@ -167,7 +124,7 @@ namespace libBinaryTree {
             if (prmNode == nullptr) return;
 
             if (prmNode->opItsLeaf()) {
-                prmNode->opSetCode(prmDadCode);
+                prmNode->attData.attCode = prmDadCode;
             }
 
             // Llamadas recursivas para los nodos hijos
@@ -182,7 +139,9 @@ namespace libBinaryTree {
             if (prmNode == nullptr) return;
 
             if (prmNode->opItsLeaf()) {
-                prmNode->opContain();
+                cout<<prmNode->attData.attCharacter << endl;
+                cout << prmNode->attData.attFrequency << endl;
+                cout << prmNode->attData.attCode << endl;
             }
 
             // Llamadas recursivas para recorrer el subárbol izquierdo y derecho
