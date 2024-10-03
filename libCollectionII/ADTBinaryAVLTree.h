@@ -104,7 +104,7 @@ namespace libBinaryTree {
 		*/
 		void opRemoved(strNode* prmFather) {
 			// Camino desde padre hasta la raiz
-			vector<strNode*> varBranch;
+			vector<strNode*> varBranch = this->opGetBranch(prmFather);
 			// Obtener la rama desde la raiz hasta el padre del nodo eliminado
 			opSwingTree(varBranch);
 		}
@@ -114,7 +114,7 @@ namespace libBinaryTree {
 		*/
 		void opInserted(strNode* prmNode) {
 			// Camino desde padre hasta la raiz
-			vector<strNode*> varBranch;
+			vector<strNode*> varBranch = this->opGetBranch(prmNode);
 			// Obtener la rama desde la raiz hasta el padre del nodo eliminado
 			opSwingTree(varBranch);
 		}

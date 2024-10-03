@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <vector>
 #include "ADTBinaryTree.h"
 
 using std::cout;
@@ -176,6 +177,17 @@ namespace libBinaryTree {
 			//si el nodo si tiene un hijo derecho se mueve a este y va lo más a la izquierda posible
 			prmNode = prmNode->attRight;
 			return this->opGoExtremeLeft(prmNode);
+		}
+		vector<strNode*> opGetBranch(strNode* prmNode) {
+			vector<strNode*> varBranch;
+			strNode* varNode = this->attRoot;
+			while (varNode != nullptr && varNode->attData != prmNode->attData) {
+				varBranch.insert(varBranch.begin(), varNode);
+				if (varNode->attData > prmNode->attData) {
+					varNode = varNode->attLeft;
+				}
+				else varNode = varNode->attRigth;
+			}
 		}
 #pragma endregion 
 	public:
