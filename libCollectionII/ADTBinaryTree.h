@@ -1,13 +1,13 @@
 #pragma once
-#include <iostream>
-#include <algorithm>
 
+#include <iostream>
+using std::ostream;
 using std::cout;
 using std::endl;
 
 namespace libBinaryTree {
 	template <class T>
-	/*@brief Dato abstracto de un árbol binario*/
+	/**@brief Clase abstracta de un árbol binario*/
 	class ADTBinaryTree {
 #pragma region Attributes
 	protected:
@@ -17,16 +17,20 @@ namespace libBinaryTree {
 			strNode* attLeft; /*!< Referencia al hijo izquierdo >*/
 			strNode* attRight; /*!< Referencia al hijo derecho >*/
 #pragma region OperationsOfStrNode
+			/**
+			* @brief Crea una instancia de un nodo de arbol binario
+			* @param prmData Dato a almacenar en el nodo
+			*/
 			strNode(T prmData) :attData(prmData), attLeft(nullptr), attRight(nullptr) {}
 			/**
-			*@brief Verifica si el nodo una hoja
+			* @brief Verifica si el nodo es una hoja
 			*/
 			bool opItsLeaf() {
 				return(attLeft == nullptr && attRight == nullptr);
 			}
 			/**
-			*@brief Verifica si el dato esta contenido en el nodo
-			*@param Dato a comparar
+			* @brief Verifica si el nodo contiene el dato especificado
+			* @param prmData Dato a verificar
 			*/
 			bool opContain(T prmData) {
 				return(this->attData == prmData);
@@ -41,9 +45,10 @@ namespace libBinaryTree {
 	#pragma region CRUD
 		/**
 		* @brief Destruye un nodo y su sub arbol, liberando la memoria asociada
-		* @param n Nodo a destruir
+		* @param prmNode Nodo a destruir
 		*/
 		void opDestroy(strNode* prmNode) {
+
 			if (prmNode == nullptr) {
 				return;
 			}
@@ -51,53 +56,79 @@ namespace libBinaryTree {
 			opDestroy(prmNode->attRight);
 			// Eliminar el sub arbol izquierdo
 			opDestroy(prmNode->attLeft);
-			// Elimonar este nodo
+			// Eliminar este nodo
 			delete prmNode;
+		}
+		/**
+		* @brief Copia profunda de un nodo
+		* @param prmNode Nodo a copiar
+		* @return nuevo nodo y nuevos descendientes
+		*/
+		strNode* opDeepCopy(const strNode* prmNode) {
+			if (prmNode == nullptr) {
+				return nullptr;
+			}
+			//Crear un nuevo nodo con los datos de prmNode
+			strNode* varNode = new strNode(prmNode->attData);
+			// Copia profunda del sub arbol izquierdo
+			varNode->attLeft = opDeepCopy(prmNode->attLeft);
+			// Copia profunda del sub arbol derecho
+			varNode->attRight = opDeepCopy(prmNode->attRight);
+			return varNode;
 		}
 	#pragma endregion
 	#pragma region ShowTree
 		/**
-			* @brief Recorrido recursivo en preorden a partir de prmNode (prmNode->dato, prmNode->izq, prmNode->der)
-			* @param prmNode Nodo de inicio del recorrido
-			*/
-		void opPreOrder(strNode* prmNode) {
-				if (prmNode == nullptr) {
-					return;
-				}
-				cout << " " << prmNode->attData;
-				//Invocar recursivamente 
-				opPreOrder(prmNode->attLeft);
-				opPreOrder(prmNode->attRight);
+		* @brief Recorrido en preorden a partir de Nodo (prmNode->attData, prmNode->attLeft, prmNode->attRight)
+		* @param os Flujo de salida al cual se envia el dato del nodo
+		* @param prmNode Nodo de inicio del recorrido
+		*/
+		void opPreOrder(ostream& os, strNode* prmNode) {
+			if (prmNode == nullptr) {
+				return;
 			}
+			if (prmNode != this->attRoot) {
+				os << " ";
+			}
+			// Enviar el dato de este nodo al flujo 
+			os << prmNode->attData;
+			//Invocar recursivamente preorden en los hijos
+			opPreOrder(os, prmNode->attLeft);
+			opPreOrder(os, prmNode->attRight);
+		}
 		/**
-			* @brief Recorrido recursivo en inorden a partir de prmNode (prmNode->izq, prmNode->dato, prmNode->der)
-			* @param prmNode Nodo de inicio del recorrido
-			*/
-		void opInOrder(strNode* prmNode) {
-				if (prmNode == nullptr) {
-					return;
-				}
-
-				//Invocar recursivamente inorden en el hijo izquierdo
-				opInOrder(prmNode->attLeft);
-				cout << " " << prmNode->attData;
-				//Invocar recursivamente inorden en el hijo derecho
-				opInOrder(prmNode->attRight);
+		* @brief Recorrido inorden a partir de n (prmNode->attLeft, prmNode->attData, prmNode->attRight)
+		* @param os Flujo de salida al cual se envia el dato del nodo
+		* @param prmNode Nodo de inicio del recorrido
+		*/
+		void opInOrder(ostream& os, strNode* prmNode) {
+			if (prmNode == nullptr) {
+				return;
 			}
+			//Invocar recursivamente preorden en el hijo izquierdo
+			opInOrder(os, prmNode->attLeft);
+			// El dato de este nodo
+			os << " ";
+			os << prmNode->attData;
+			//Invocar recursivamente preorden en el hijo derecho
+			opInOrder(os, prmNode->attRight);
+		}
 		/**
-			*@brief Recorrido recursivo en Posorden a partir de prmNode (prmNode->izq, prmNode->der, prmNode->dato)
-			*@param prmNode Nodo de inicio del recorrido
-			*/
-		void opPosOrder(strNode* prmNode) {
-				if (prmNode == nullptr) {
-					return;
-				}
-				//Invocar recursivamente inorden en el hijo izquierdo
-				opPosOrder(prmNode->attLeft);
-				//Invocar recursivamente inorden en el hijo derecho
-				opPosOrder(prmNode->attRight);
-				cout << " " << prmNode->attData;
+		* @brief Recorrido posorden a partir de n (prmNode->attLeft, prmNode->attRight, prmNode->attData)
+		* @param os Flujo de salida al cual se envia el dato del nodo
+		* @param prmNode Nodo de inicio del recorrido
+		*/
+		void opPosOrder(ostream& os, strNode* prmNode) {
+			if (prmNode == nullptr) {
+				return;
 			}
+			//Invocar recursivamente preorden en el hijo izquierdo
+			opPosOrder(os, prmNode->attLeft);
+			//Invocar recursivamente preorden en el hijo derecho
+			opPosOrder(os, prmNode->attRight);
+			os << " ";
+			os << prmNode->attData;
+		}
 	#pragma endregion
 	#pragma region Utilities
 		/*
@@ -120,21 +151,6 @@ namespace libBinaryTree {
 			//si el nodo si tiene un hijo derecho la función se llama a si misma dando como nodo raiz el hijo derecho
 			return opGoExtremeRight(prmNode->attRight);
 		}
-		/*
-		*@brief Cópia profunda(completa) de un nodo 
-		*@param Nodo a copiar
-		*@return Nuevo nodo y nuevos descendientes
-		*/
-		strNode* opDeepCopy(const strNode* & prmNode) {
-			if (prmNode == nullptr) return nullptr;
-			//Crear un nuevo nodo con los datos de prmNode
-			strNode* varNode = new strNode(prmNode->attData);
-			//Copia profunda del subarbol izquierdo
-			varNode->attLeft = opDeepCopy(prmNode->attLeft);
-			//Copia profunda del subarbol derecho
-			varNode->attRight = opDeepCopy(prmNode->attRight);
-			return varNode;
-		}
 	#pragma endregion
 	public:
 	#pragma region Builder
@@ -147,42 +163,47 @@ namespace libBinaryTree {
 		ADTBinaryTree(const ADTBinaryTree & prmTree) {
 			if (prmTree.attRoot != nullptr) attRoot = opDeepCopy(prmTree.attRoot);
 		}
-#pragma endregion
-	#pragma region CRUD
-		virtual bool opInsert(strNode* prmDadNode, strNode* prmNewNode) = 0;
-		virtual void opRemove(strNode* prmNode, T prmData) = 0;
-		virtual ~ADTBinaryTree() {
-			opDestroy(attRoot);
+		/**
+		* @brief 4. Constructor de mover
+		* @param prmTree Referencia al arbol que se va a mover a esta instancia
+		*/
+		ADTBinaryTree(ADTBinaryTree&& prmTree) {
+			std::swap(attRoot, prmTree.attRoot);
 		}
-
+		/**
+		* @brief 3. Destructor
+		* Libera los recursos (memoria) asignados al arbol
+		*/
+		~ADTBinaryTree() {
+			opDestroy(attRoot);
+			attRoot = nullptr;
+		}
 #pragma endregion
 	#pragma region ShowTree
 		/**
-			* @brief Imprime el recorrido en preorden (dato, izq, der)
-			*/	
-		void opShowPreOrder() {
-
-				opPreOrder(attRoot);
-			}
+		* @brief Imprime el recorrido en preorden (dato, izquierdo, derecho)
+		*/	
+		void opShowPreOrder(ostream& os) {
+			opPreOrder(os,attRoot);
+		}
 		/**
-			* @brief Imprime el recorrido en inorden (izq, dato, der)
-			*/
-		void opShowInOrder() {
-
-				opInOrder(attRoot);
-			}
+		* @brief Imprime el recorrido en inorden (izquierdo, dato, derecho)
+		*/
+		void opShowInOrder(ostream& os) {
+			opInOrder(os, attRoot);
+		}
 		/**
-			* @brief Imprime el recorrido en posorden (izq, der, dato)
-			*/
-		void opShowPosOrder() {
-				opPosOrder(attRoot);
-			}
+		* @brief Imprime el recorrido en posorden (izquierdo, derecho, dato)
+		*/
+		void opShowPosOrder(ostream& os) {
+			opPosOrder(os, attRoot);
+		}
 	#pragma endregion
 	#pragma region Query
 		/**
-				* @brief Permite verificar si el arbol esta vacio
-				* @return true si el arbol se encuentra vacio
-				*/
+		* @brief Permite verificar si el arbol esta vacio
+		* @return true si el arbol se encuentra vacio
+		*/
 		bool opItsEmpty() {
 				return (attRoot == nullptr);
 			}
@@ -201,8 +222,44 @@ namespace libBinaryTree {
 			if (prmNode == nullptr) return 0;
 			return 1 + opWeightTree(prmNode->attLeft) + opWeightTree(prmNode->attRight);
 		}
-		strNode* opGetRoot() {
-			return attRoot;
+	#pragma endregion
+	#pragma region Operators
+	/**
+	* @brief Operador de asignacion de copia
+	* @param prmTree Arbol a copiar
+	* @return Este arbol que contiene una copia de prmNode
+	*/
+		ADTBinaryTree& operator=(const ADTBinaryTree& prmTree) {
+
+			// Si las instancias son diferentes, realizar la copia.
+			if (this != &prmTree) {
+				// Eliminar los nodos existentes de forma recursiva
+				opDestroy(attRoot);
+				// Obtener una copia de los nodos de la otra instancia
+				this->attRoot = opDeepCopy(prmTree.attRoot);
+			}
+			return *this;
+		}
+	/**
+		* @brief Operador de asignacion de mover
+		* @param prmTree Referencia al arbol que se va a mover a esta instancia
+		* @return Esta instancia
+		*/
+		ADTBinaryTree& operator=(ADTBinaryTree&& prmTree) noexcept {
+
+			// Si las instancias son diferentes, tomar los nodos.
+			if (this != &prmTree)
+			{
+				// Tomar la raiz del otro arbol e intercambiarla
+				// Destruir los nodos de esta instancia
+				opDestroy(this->attRoot);
+				// Asignar nullptr a la raiz de esta instancia
+				this->attRoot = nullptr;
+
+				// Intercambiar la raiz de esta instancia
+				std::swap(this->attRoot, prmTree.attRoot);
+			}
+			return *this;
 		}
 	#pragma endregion
 #pragma endregion

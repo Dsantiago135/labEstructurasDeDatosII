@@ -130,6 +130,7 @@
     <ClCompile Include="libCollectionII.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ADTBinaryAVLTree.h" />
     <ClInclude Include="ADTBinaryExpressionTree.h" />
     <ClInclude Include="ADTBinaryHuffmanTree.h" />
     <ClInclude Include="ADTBinarySearchTree.h" />
