@@ -5,6 +5,8 @@
 using namespace libBinaryTree;
 
 int main() {
-  
+    
+    clsBinaryHuffmanTree varTree("programa");
+    varTree.opShowTree();
     return 0;
 }

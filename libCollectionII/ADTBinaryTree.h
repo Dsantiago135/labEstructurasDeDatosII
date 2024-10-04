@@ -1,7 +1,5 @@
 #pragma once
-
 #include <iostream>
-using std::ostream;
 using std::cout;
 using std::endl;
 
@@ -83,51 +81,44 @@ namespace libBinaryTree {
 		* @param os Flujo de salida al cual se envia el dato del nodo
 		* @param prmNode Nodo de inicio del recorrido
 		*/
-		void opPreOrder(ostream& os, strNode* prmNode) {
+		void opPreOrder(strNode* prmNode) {
 			if (prmNode == nullptr) {
 				return;
 			}
-			if (prmNode != this->attRoot) {
-				os << " ";
-			}
-			// Enviar el dato de este nodo al flujo 
-			os << prmNode->attData;
-			//Invocar recursivamente preorden en los hijos
-			opPreOrder(os, prmNode->attLeft);
-			opPreOrder(os, prmNode->attRight);
+			cout << " " << prmNode->attData;
+			//Invocar recursivamente 
+			opPreOrder(prmNode->attLeft);
+			opPreOrder(prmNode->attRight);
 		}
 		/**
 		* @brief Recorrido inorden a partir de n (prmNode->attLeft, prmNode->attData, prmNode->attRight)
 		* @param os Flujo de salida al cual se envia el dato del nodo
 		* @param prmNode Nodo de inicio del recorrido
 		*/
-		void opInOrder(ostream& os, strNode* prmNode) {
+		void opInOrder(strNode* prmNode) {
 			if (prmNode == nullptr) {
 				return;
 			}
-			//Invocar recursivamente preorden en el hijo izquierdo
-			opInOrder(os, prmNode->attLeft);
-			// El dato de este nodo
-			os << " ";
-			os << prmNode->attData;
-			//Invocar recursivamente preorden en el hijo derecho
-			opInOrder(os, prmNode->attRight);
+			//Invocar recursivamente inorden en el hijo izquierdo
+			opInOrder(prmNode->attLeft);
+			cout << " " << prmNode->attData;
+			//Invocar recursivamente inorden en el hijo derecho
+			opInOrder(prmNode->attRight);
 		}
 		/**
 		* @brief Recorrido posorden a partir de n (prmNode->attLeft, prmNode->attRight, prmNode->attData)
 		* @param os Flujo de salida al cual se envia el dato del nodo
 		* @param prmNode Nodo de inicio del recorrido
 		*/
-		void opPosOrder(ostream& os, strNode* prmNode) {
+		void opPosOrder(strNode* prmNode) {
 			if (prmNode == nullptr) {
 				return;
 			}
-			//Invocar recursivamente preorden en el hijo izquierdo
-			opPosOrder(os, prmNode->attLeft);
-			//Invocar recursivamente preorden en el hijo derecho
-			opPosOrder(os, prmNode->attRight);
-			os << " ";
-			os << prmNode->attData;
+			//Invocar recursivamente inorden en el hijo izquierdo
+			opPosOrder(prmNode->attLeft);
+			//Invocar recursivamente inorden en el hijo derecho
+			opPosOrder(prmNode->attRight);
+			cout << " " << prmNode->attData;
 		}
 	#pragma endregion
 	#pragma region Utilities
@@ -183,20 +174,20 @@ namespace libBinaryTree {
 		/**
 		* @brief Imprime el recorrido en preorden (dato, izquierdo, derecho)
 		*/	
-		void opShowPreOrder(ostream& os) {
-			opPreOrder(os,attRoot);
+		void opShowPreOrder() {
+			opPreOrder(attRoot);
 		}
 		/**
 		* @brief Imprime el recorrido en inorden (izquierdo, dato, derecho)
 		*/
-		void opShowInOrder(ostream& os) {
-			opInOrder(os, attRoot);
+		void opShowInOrder() {
+			opInOrder(attRoot);
 		}
 		/**
 		* @brief Imprime el recorrido en posorden (izquierdo, derecho, dato)
 		*/
-		void opShowPosOrder(ostream& os) {
-			opPosOrder(os, attRoot);
+		void opShowPosOrder() {
+			opPosOrder(attRoot);
 		}
 	#pragma endregion
 	#pragma region Query

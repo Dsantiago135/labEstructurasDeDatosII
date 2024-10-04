@@ -1,17 +1,13 @@
 #pragma once
-#include <iostream>
 #include <vector>
-#include <queue>
+#include <algorithm>
 #include <string>
-#include <functional>
 #include "ADTBinaryTree.h"
 
 using std::cout;
 using std::endl;
 using std::vector;
 using std::string;
-using std::priority_queue;
-using std::pair;
 
 namespace libBinaryTree {
     /*@brief Estructura de dato Huffman*/
@@ -87,33 +83,36 @@ namespace libBinaryTree {
             opFrequencyCharacter(prmWord, prmArray, prmIndex + 1);
         }
         /**
-         * @brief Genera un árbol de Huffman a partir de un vector de datos Huffman
-         * @param prmArray Vector que contiene los datos Huffman con frecuencia y carácter
-         * @return Nodo raíz del árbol de Huffman generado
-         */
+ * @brief Genera un árbol de Huffman a partir de un vector de datos Huffman
+ * @param prmArray Vector que contiene los datos Huffman con frecuencia y carácter
+ * @return Nodo raíz del árbol de Huffman generado
+ */
         strNode* opGenerateTree(vector<strHuffman>& prmArray) {
-            priority_queue<strNode*, vector<strNode*>, std::function<bool(strNode*, strNode*)>> varFrequencyQueue(
-                [](strNode* a, strNode* b) { return a->attData.attFrequency > b->attData.attFrequency; });
+            //ordeno el vector antes de empezar a generar nodos
+            std::sort(prmArray.begin(), prmArray.end(), [](const strHuffman& a, const strHuffman& b) {
+                return a.attFrequency < b.attFrequency;
+                });
 
-            // Agrega todos los elementos al priority queue
-            for (const auto& varHuffmanData : prmArray) {
-                varFrequencyQueue.push(new strNode(varHuffmanData));
+            //creo un vector de nodos para operar(ya ordenado por frecuencias)
+            vector<strNode*> varFrequencyVector;
+            for (int i = 0; prmArray.size() > i; i++) { 
+                strNode* varNode = new strNode(prmArray[i]);
+                varFrequencyVector.push_back(varNode);
+            };
+            while (varFrequencyVector.size() >= 2) {
+                strNode* varDadNode = new strNode(strHuffman('\0', 0)); // Nodo padre con frecuencia 0
+                varDadNode->attData.attFrequency = varFrequencyVector[0]->attData.attFrequency + varFrequencyVector[1]->attData.attFrequency;
+                varDadNode->attLeft = varFrequencyVector[0];
+                varDadNode->attRight = varFrequencyVector[1];
+
+                varFrequencyVector.erase(varFrequencyVector.begin(), varFrequencyVector.begin() + 2); // Elimina los dos nodos menores
+                varFrequencyVector.push_back(varDadNode);  // Inserta el nuevo nodo padre al final
+                std::sort(varFrequencyVector.begin(), varFrequencyVector.end(), [](strNode* a, strNode* b) {
+                    return a->attData.attFrequency < b->attData.attFrequency;
+                    });
+
             }
-
-            // Construye el árbol de Huffman
-            while (varFrequencyQueue.size() > 1) {
-                strNode* varNodeLeft = varFrequencyQueue.top(); varFrequencyQueue.pop();
-                strNode* varNodeRight = varFrequencyQueue.top(); varFrequencyQueue.pop();
-                strHuffman varNodeCombined('\0', varNodeLeft->attData.attFrequency + varNodeRight->attData.attFrequency);
-
-                strNode* newNode = new strNode(varNodeCombined);
-                newNode->attLeft = varNodeLeft;
-                newNode->attRight = varNodeRight;
-                varFrequencyQueue.push(newNode);
-            }
-
-            // Retorna el nodo raíz del árbol de Huffman
-            return varFrequencyQueue.top();
+            return varFrequencyVector[0];
         }
         /**
          * @brief Genera los códigos de Huffman de cada carácter en el árbol de forma recursiva
@@ -123,11 +122,12 @@ namespace libBinaryTree {
         void opGenerateCode(strNode* prmNode, string prmDadCode) {
             if (prmNode == nullptr) return;
 
+            // Si es una hoja, asignamos el código
             if (prmNode->opItsLeaf()) {
                 prmNode->attData.attCode = prmDadCode;
             }
 
-            // Llamadas recursivas para los nodos hijos
+            // Recursión para los hijos: "0" para la izquierda, "1" para la derecha
             opGenerateCode(prmNode->attLeft, prmDadCode + "0");
             opGenerateCode(prmNode->attRight, prmDadCode + "1");
         }
@@ -135,18 +135,18 @@ namespace libBinaryTree {
          * @brief Realiza un recorrido preorden en el árbol de Huffman, mostrando los datos de cada hoja
          * @param prmNode Nodo actual del árbol desde el cual inicia el recorrido
          */
-        void opPreOrder(strNode* prmNode) {
+        void opHuffmanTreePreOrder(strNode* prmNode) {
             if (prmNode == nullptr) return;
 
             if (prmNode->opItsLeaf()) {
-                cout<<prmNode->attData.attCharacter << endl;
-                cout << prmNode->attData.attFrequency << endl;
-                cout << prmNode->attData.attCode << endl;
+                cout << "Caracter: " << prmNode->attData.attCharacter;
+                cout << " - Frecuencia: " << prmNode->attData.attFrequency ;
+                cout << " - Codigo del caracter: " << prmNode->attData.attCode << endl;
             }
 
             // Llamadas recursivas para recorrer el subárbol izquierdo y derecho
-            opPreOrder(prmNode->attLeft);
-            opPreOrder(prmNode->attRight);
+            opHuffmanTreePreOrder(prmNode->attLeft);
+            opHuffmanTreePreOrder(prmNode->attRight);
         }
         /**
          * @brief Busca el código Huffman correspondiente a un carácter específico en el árbol
@@ -155,18 +155,19 @@ namespace libBinaryTree {
          * @param prmCode Código resultante del carácter buscado
          * @return True si el carácter fue encontrado, de lo contrario False
          */
-        bool opCodeWord(strNode* prmNode, char prmCharacter, string& prmCode) {
+        bool opSearchCodeWord(strNode* prmNode, char prmCharacter, string& prmCode) {
             if (prmNode == nullptr) return false;
+
             if (prmNode->opItsLeaf()) {
                 if (prmNode->attData.attCharacter == prmCharacter) {
-                    prmCode += prmNode->attData.attCode;
+                    prmCode = prmCode + prmNode->attData.attCode;
                     return true;
                 }
                 return false;
             }
             // Llamadas recursivas a la izquierda y derecha
-            if (opCodeWord(prmNode->attLeft, prmCharacter, prmCode)) return true;
-            return opCodeWord(prmNode->attRight, prmCharacter, prmCode);
+            if (opSearchCodeWord(prmNode->attLeft, prmCharacter, prmCode)) return true;
+            return opSearchCodeWord(prmNode->attRight, prmCharacter, prmCode);
         }
         /**
          * @brief Codifica la palabra original utilizando el árbol de Huffman
@@ -176,8 +177,8 @@ namespace libBinaryTree {
             string varCode;
             // Recorre cada carácter de la palabra original y genera su código Huffman
             for (size_t i = 0; i < attOriginalWord.length(); i++) {
-                // Se obtiene el código de cada carácter y se agrega a la cadena varCode
-                opCodeWord(attRoot, attOriginalWord[i], varCode);
+                // Se busca el código de cada carácter y lo concatena a la cadena varCode
+                opSearchCodeWord(attRoot, attOriginalWord[i], varCode);
             }
             return varCode;  // Devuelve el código completo de la palabra original
         }
@@ -185,8 +186,8 @@ namespace libBinaryTree {
          * @brief Muestra el árbol de Huffman y los códigos generados
          */
         void opShowTree() {
-            cout << endl << "Palabra original: " << attOriginalWord;  // Muestra la palabra original
-            opPreOrder(attRoot);  // Realiza un recorrido en preorden para mostrar los nodos (caracteres, frecuencias, códigos)
+            cout << endl << "Palabra original: " << attOriginalWord<<endl;  // Muestra la palabra original
+            opHuffmanTreePreOrder(attRoot);  // Realiza un recorrido en preorden para mostrar los nodos (caracteres, frecuencias, códigos)
             cout << endl << "Código de la palabra: ";
             cout << endl << opCodeOriginalWord();  // Muestra el código Huffman completo de la palabra original
         }

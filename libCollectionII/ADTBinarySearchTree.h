@@ -178,7 +178,7 @@ namespace libBinaryTree {
 			prmNode = prmNode->attRight;
 			return this->opGoExtremeLeft(prmNode);
 		}
-		vector<strNode*> opGetBranch(strNode* prmNode) {
+		/*vector<strNode*> opGetBranch(strNode* prmNode) {
 			vector<strNode*> varBranch;
 			strNode* varNode = this->attRoot;
 			while (varNode != nullptr && varNode->attData != prmNode->attData) {
@@ -189,6 +189,7 @@ namespace libBinaryTree {
 				else varNode = varNode->attRigth;
 			}
 		}
+		*/
 #pragma endregion 
 	public:
 	#pragma region CRUD
