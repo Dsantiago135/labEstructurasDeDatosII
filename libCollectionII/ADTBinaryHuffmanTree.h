@@ -112,6 +112,7 @@ namespace libBinaryTree {
                     });
 
             }
+            this->attRoot = varFrequencyVector[0];
             return varFrequencyVector[0];
         }
         /**
@@ -188,7 +189,7 @@ namespace libBinaryTree {
         void opShowTree() {
             cout << endl << "Palabra original: " << attOriginalWord<<endl;  // Muestra la palabra original
             opHuffmanTreePreOrder(attRoot);  // Realiza un recorrido en preorden para mostrar los nodos (caracteres, frecuencias, códigos)
-            cout << endl << "Código de la palabra: ";
+            cout << endl << "Codigo de la palabra: ";
             cout << endl << opCodeOriginalWord();  // Muestra el código Huffman completo de la palabra original
         }
     };
