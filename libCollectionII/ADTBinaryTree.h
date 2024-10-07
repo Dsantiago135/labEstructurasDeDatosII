@@ -85,7 +85,7 @@ namespace libBinaryTree {
 			if (prmNode == nullptr) {
 				return;
 			}
-			cout << " " << prmNode->attData;
+			cout << " " << prmNode;
 			//Invocar recursivamente 
 			opPreOrder(prmNode->attLeft);
 			opPreOrder(prmNode->attRight);

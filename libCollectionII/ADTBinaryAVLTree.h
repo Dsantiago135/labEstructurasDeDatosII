@@ -94,13 +94,14 @@ namespace libBinaryTree {
 	* @brief Arbol Binario de Busqueda Balanceado AVL
 	*/
 	class clsBinaryAVLTree : public clsBinarySearchTree<strAVLData<T>> {
-
 	protected:
-		using typename clsBinarySearchTree<strAVLData<T>> ::strNode; /*!< Tipo para el nodo */
+		using typename clsBinarySearchTree<strAVLData<T>> ::strNode;
+	#pragma region Operations
+		#pragma region CRUD
 		/**
-		* @brief Se invoca cuando un nodo ha sido eliminado
-		* @param prmFather Padre el nodo eliminado
-		*/
+* @brief Se invoca cuando un nodo ha sido eliminado
+* @param prmFather Padre el nodo eliminado
+*/
 		void opRemoved(strNode* prmFather) {
 			// Camino desde padre hasta la raiz
 			vector<strNode*> varBranch = this->opGetBranch(prmFather);
@@ -117,11 +118,13 @@ namespace libBinaryTree {
 			// Obtener la rama desde la raiz hasta el padre del nodo eliminado
 			opSwingTree(varBranch);
 		}
+		#pragma endregion
+		#pragma region Rotations
 		/**
-		* @brief Rotacion a la izquierda
-		* @param prmNode Nodo desbalanceado hacia la derecha
-		* @return Nueva raiz del sub arbol balanceado
-		*/
+* @brief Rotacion a la izquierda
+* @param prmNode Nodo desbalanceado hacia la derecha
+* @return Nueva raiz del sub arbol balanceado
+*/
 		strNode* opRotateLeft(strNode* prmNode) {
 			// Realizar la rotacion y retornar la raiz del sub arbol balanceado
 			return prmNode;
@@ -135,11 +138,13 @@ namespace libBinaryTree {
 			// Realizar la rotacion y retornar la raiz del sub arbol balanceado
 			return prmNode;
 		}
+		#pragma endregion
 	private:
+		#pragma region Utilities
 		/**
-		* @brief Actualiza la altura de un nodo con base en sus sub arboles
-		* @param n Nodo a actualizar
-		*/
+* @brief Actualiza la altura de un nodo con base en sus sub arboles
+* @param n Nodo a actualizar
+*/
 		void actualizar_altura(strNode* prmNode) {
 			// Actualizar la altura de n con base en altura(n->izq) y altura(n->der);			
 		}
@@ -180,5 +185,7 @@ namespace libBinaryTree {
 			// Si fb = 2 o fb = -2, balancear x
 			// Fin para 
 		}
+		#pragma endregion  
+	#pragma endregion
 	};
 }

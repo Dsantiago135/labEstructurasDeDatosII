@@ -77,12 +77,12 @@ namespace libBinaryTree {
 			// 1. Si prmNode contiene el dato:
 			if (prmNode->opContain(prmData)) {
 				// 1.1. Si n es hoja, eliminar el nodo n y terminar
-				if (prmNode->ItsLeaf()) {
+				if (prmNode->opItsLeaf()) {
 
 					if (prmFather != nullptr) {
 						// El nodo tiene padre, actualizar la referencia del padre
 						if (prmFather->attLeft == prmNode) {
-							prmFather->left = nullptr;
+							prmFather->attLeft = nullptr;
 						}
 						else {
 							prmFather->attRight= nullptr;
@@ -106,7 +106,7 @@ namespace libBinaryTree {
 
 					if (prmNode->attLeft != nullptr) {
 						// Mayor de los menores
-						varNode = prmNode->attleft;
+						varNode = prmNode->attLeft;
 						while (varNode->attRight != nullptr) {
 							prmFather = varNode;
 							varNode = varNode->attRight;
@@ -135,7 +135,7 @@ namespace libBinaryTree {
 			else {
 				// 3. Si el dato de n es menor al dato,
 				// eliminar recursivamente hacia el hijo derecho
-				opDelete(prmNode, prmNode->attRigth, prmData);
+				opDelete(prmNode, prmNode->attRight, prmData);
 			}
 		}
 		/**
