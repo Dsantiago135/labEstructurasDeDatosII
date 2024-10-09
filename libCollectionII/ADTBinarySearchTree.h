@@ -26,7 +26,7 @@ namespace libBinaryTree {
 			// Si el padre es nulo, el nuevo nodo se convierte en la raiz.
 			if (prmFather == nullptr) {
 				this->attRoot = prmNode;
-				cout << prmNode->attData << " se convirtio en al raiz" << endl;
+				cout <<"el dato: " << prmNode->attData << " se convirtio en al raiz" << endl;
 				return true;
 			}
 
@@ -212,9 +212,7 @@ namespace libBinaryTree {
 		*/
 		void opDelete(T prmData) {
 			//1. Si el arbol es vacio, terminar
-			if (this->opItsEmpty()) {
-				return;
-			}
+			if (this->opItsEmpty()) return;
 			/*
 			// POST: El arbol no esta vacio
 			//2. recursivamente, eliminar el dato a partir de la raiz
