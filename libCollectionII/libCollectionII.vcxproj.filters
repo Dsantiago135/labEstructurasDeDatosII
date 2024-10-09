@@ -13,27 +13,45 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de encabezado\pkgN-Ario">
+      <UniqueIdentifier>{13a0ee47-6798-47b4-bf04-0758e3cf9702}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\pkgBinaryTree">
+      <UniqueIdentifier>{08107555-fb09-415d-a068-7833d289e346}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="libCollectionII.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Downloads\4.0_BASE_arbol_n_ario\4.0_BASE_arbol_n_ario\arbol_n_pruebas.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ADTBinaryTree.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\pkgBinaryTree</Filter>
     </ClInclude>
     <ClInclude Include="ADTBinarySearchTree.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="ADTBinaryExpressionTree.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\pkgBinaryTree</Filter>
     </ClInclude>
     <ClInclude Include="ADTBinaryHuffmanTree.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\pkgBinaryTree</Filter>
+    </ClInclude>
+    <ClInclude Include="ADTBinaryExpressionTree.h">
+      <Filter>Archivos de encabezado\pkgBinaryTree</Filter>
     </ClInclude>
     <ClInclude Include="ADTBinaryAVLTree.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\pkgBinaryTree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Downloads\4.0_BASE_arbol_n_ario\4.0_BASE_arbol_n_ario\arbol_123.h">
+      <Filter>Archivos de encabezado\pkgN-Ario</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Downloads\4.0_BASE_arbol_n_ario\4.0_BASE_arbol_n_ario\arbol_n.h">
+      <Filter>Archivos de encabezado\pkgN-Ario</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Downloads\4.0_BASE_arbol_n_ario\4.0_BASE_arbol_n_ario\arbol_n_pruebas.h">
+      <Filter>Archivos de encabezado\pkgN-Ario</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

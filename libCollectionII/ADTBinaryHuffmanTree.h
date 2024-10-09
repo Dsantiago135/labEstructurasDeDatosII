@@ -4,6 +4,7 @@
 #include <string>
 #include "ADTBinaryTree.h"
 
+using std::ostream;
 using std::cout;
 using std::endl;
 using std::vector;
@@ -29,6 +30,10 @@ namespace libBinaryTree {
          */
         bool operator > (const strHuffman& prmOther) const {
             return attFrequency > prmOther.attFrequency;
+        }
+        friend ostream& operator<< (ostream& os ,strHuffman& prmData) {
+            os <<"|"<< prmData.attCharacter << "-" << prmData.attFrequency << "-" << prmData.attCode << "|";
+            return os;
         }
     };
 
@@ -196,10 +201,13 @@ namespace libBinaryTree {
          * @brief Muestra el árbol de Huffman y los códigos generados
          */
         void opShowTree() {
-            cout << endl << "Palabra original: " << attOriginalWord << endl;  // Muestra la palabra original
+            cout << "Palabra original: " << attOriginalWord << endl;  // Muestra la palabra original
             opHuffmanTreePreOrder(attRoot);  // Realiza un recorrido en preorden para mostrar los nodos (caracteres, frecuencias, códigos)
             cout << endl << "Codigo de la palabra: ";
             cout << endl << opCodeOriginalWord();  // Muestra el código Huffman completo de la palabra original
+            opShowPreOrder();
+            opShowInOrder();
+            opShowPosOrder();
         }
     #pragma endregion  
 #pragma endregion

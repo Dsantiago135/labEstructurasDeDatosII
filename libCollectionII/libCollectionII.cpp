@@ -26,17 +26,10 @@ int main() {
     cout << endl << endl <<"Prueba arbol de Huffman:" << endl ;
     clsBinaryHuffmanTree varHuffmanTree("programa");
     varHuffmanTree.opShowTree();
-    varHuffmanTree.opShowPreOrder();
-//   cout << endl << "arbol en Preorden" << endl;
-//    varTree.opShowPreOrder();
-//    cout << endl << "arbol en Inorden" << endl;
-//    varTree.opShowInOrder();
-//    cout << endl << "arbol en Posorden" << endl;
-//    varTree.opShowPosOrder();
-//    cout << endl <<"Prueba arbol de expresiones" << endl;
-    cout << endl << endl << "Prueba arbol de Expresiones:" << endl ;
 
+    cout << endl << endl << "Prueba arbol de Expresiones:" << endl ;
     clsBinaryExpressionTree varExpresionTree("(a+((b-c)*(d+e))+f)+g");
+    varExpresionTree.opShowExpressionTree();
 
     cout << endl << "Prueba arbol AVL:"<< endl;
     return 0;

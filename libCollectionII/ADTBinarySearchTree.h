@@ -26,6 +26,7 @@ namespace libBinaryTree {
 			// Si el padre es nulo, el nuevo nodo se convierte en la raiz.
 			if (prmFather == nullptr) {
 				this->attRoot = prmNode;
+				cout << prmNode->attData << " se convirtio en al raiz" << endl;
 				return true;
 			}
 
@@ -51,7 +52,7 @@ namespace libBinaryTree {
 			else {
 				// Insertar a la derecha
 				//El hijo derecho es nulo?
-				if (prmFather == nullptr) {
+				if (prmFather->attRight == nullptr) {
 					// El nuevo nodo se convierte en el hijo derecho					
 					prmFather->attRight = prmNode;
 					// Notificar de nodo insertado
@@ -143,14 +144,13 @@ namespace libBinaryTree {
 		* @param padre Padre del nodo eliminado
 		*/
 		virtual void opRemoved(strNode* prmFather) {
-
 		}
 		/**
 		* @brief Metodo de plantilla nodo insertado
 		* @param n Nuevo nodo del arbol
 		*/
 		virtual void opInserted(strNode* prmNode) {
-
+			cout << "el dato se inserto correctamente:" << prmNode->attData<< endl;
 		}
 #pragma endregion
 	#pragma region Utilities

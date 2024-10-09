@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+
+using std::ostream;
 using std::cout;
 using std::endl;
 
@@ -32,6 +34,10 @@ namespace libBinaryTree {
 			*/
 			bool opContain(T prmData) {
 				return(this->attData == prmData);
+			}
+			friend ostream& operator<<(ostream& os, strNode& prmNode) {
+				os << prmNode.attData;
+				return os;
 			}
 #pragma endregion
 		};
@@ -81,11 +87,9 @@ namespace libBinaryTree {
 		* @param os Flujo de salida al cual se envia el dato del nodo
 		* @param prmNode Nodo de inicio del recorrido
 		*/
-		void opPreOrder(strNode* prmNode) {
-			if (prmNode == nullptr) {
-				return;
-			}
-			cout << " " << prmNode;
+		void opPreOrder(strNode* prmNode){
+			if (prmNode == nullptr) return;
+			cout << " " << prmNode->attData;
 			//Invocar recursivamente 
 			opPreOrder(prmNode->attLeft);
 			opPreOrder(prmNode->attRight);
@@ -96,9 +100,7 @@ namespace libBinaryTree {
 		* @param prmNode Nodo de inicio del recorrido
 		*/
 		void opInOrder(strNode* prmNode) {
-			if (prmNode == nullptr) {
-				return;
-			}
+			if (prmNode == nullptr) return;
 			//Invocar recursivamente inorden en el hijo izquierdo
 			opInOrder(prmNode->attLeft);
 			cout << " " << prmNode->attData;
@@ -111,14 +113,12 @@ namespace libBinaryTree {
 		* @param prmNode Nodo de inicio del recorrido
 		*/
 		void opPosOrder(strNode* prmNode) {
-			if (prmNode == nullptr) {
-				return;
-			}
+			if (prmNode == nullptr) return;
 			//Invocar recursivamente inorden en el hijo izquierdo
 			opPosOrder(prmNode->attLeft);
 			//Invocar recursivamente inorden en el hijo derecho
 			opPosOrder(prmNode->attRight);
-			cout << " " << prmNode->attData;
+			cout << prmNode->attData<<" ";
 		}
 	#pragma endregion
 	#pragma region Utilities
@@ -175,19 +175,25 @@ namespace libBinaryTree {
 		* @brief Imprime el recorrido en preorden (dato, izquierdo, derecho)
 		*/	
 		void opShowPreOrder() {
-			opPreOrder(attRoot);
+			cout << "Impresion del arbol en Preorden" << endl;
+			opPreOrder(this->attRoot);
+			cout << endl;
 		}
 		/**
 		* @brief Imprime el recorrido en inorden (izquierdo, dato, derecho)
 		*/
 		void opShowInOrder() {
+			cout << "Impresion del arbol en Inorden" << endl;
 			opInOrder(attRoot);
+			cout << endl;
 		}
 		/**
 		* @brief Imprime el recorrido en posorden (izquierdo, derecho, dato)
 		*/
 		void opShowPosOrder() {
+			cout << "Impresion del arbol en Posorden"<<endl;
 			opPosOrder(attRoot);
+			cout << endl;
 		}
 	#pragma endregion
 	#pragma region Query

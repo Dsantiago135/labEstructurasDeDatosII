@@ -127,9 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\Downloads\4.0_BASE_arbol_n_ario\4.0_BASE_arbol_n_ario\arbol_n_pruebas.cpp" />
     <ClCompile Include="libCollectionII.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\Downloads\4.0_BASE_arbol_n_ario\4.0_BASE_arbol_n_ario\arbol_123.h" />
+    <ClInclude Include="..\..\..\..\..\..\Downloads\4.0_BASE_arbol_n_ario\4.0_BASE_arbol_n_ario\arbol_n.h" />
+    <ClInclude Include="..\..\..\..\..\..\Downloads\4.0_BASE_arbol_n_ario\4.0_BASE_arbol_n_ario\arbol_n_pruebas.h" />
     <ClInclude Include="ADTBinaryAVLTree.h" />
     <ClInclude Include="ADTBinaryExpressionTree.h" />
     <ClInclude Include="ADTBinaryHuffmanTree.h" />

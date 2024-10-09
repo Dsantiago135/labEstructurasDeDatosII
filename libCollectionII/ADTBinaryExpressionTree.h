@@ -21,7 +21,7 @@ namespace libBinaryTree {
 		clsBinaryExpressionTree(string prmExpression) {
 			// Construir el árbol de expresión
 			strNode* varRoot = opbuildExpressionTree(prmExpression);
-
+			this->attRoot = varRoot;
 			if (varRoot) {
 				// Recorrer el árbol en orden
 				cout << "El arbol de expresion esta en orden: ";
@@ -158,6 +158,11 @@ namespace libBinaryTree {
 				opFreeTree(prmRoot->attRight);
 				delete prmRoot;
 			}
+		}
+		void opShowExpressionTree() {
+			opShowPreOrder();
+			opShowInOrder();
+			opShowPosOrder();
 		}
 	};
 }
