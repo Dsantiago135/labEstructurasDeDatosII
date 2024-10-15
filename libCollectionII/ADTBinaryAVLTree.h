@@ -22,7 +22,6 @@ namespace libBinaryTree {
 	struct strAVLData {
 		T attContent; /*!< Contenido del usuario */
 		int attHeight; /*!< Altura de este nodo */
-
 		/**
 		* @brief Crea una instancia de dato AVL
 		* @param prmData Contenido del usuario
@@ -30,13 +29,14 @@ namespace libBinaryTree {
 		strAVLData(T prmData) : attContent(prmData), attHeight(1) {
 
 		}
+		#pragma region operators
 		/**
-		* @brief Envia el contenido del dato a un flujo de salida
-		* @param os Flujo de salida
-		* @param prmAVLData Dato a enviar
-		*/
+* @brief Envia el contenido del dato a un flujo de salida
+* @param os Flujo de salida
+* @param prmAVLData Dato a enviar
+*/
 		friend ostream& operator<<(ostream& os, const strAVLData prmAVLData) {
-			os << prmAVLData.attContent << "(" << prmAVLData.attHeight<< ")";
+			os << prmAVLData.attContent << "(" << prmAVLData.attHeight << ")";
 			return os;
 		}
 		/**
@@ -53,7 +53,7 @@ namespace libBinaryTree {
 		* @return true si se cumple la condicion de comparacion
 		*/
 		bool operator!=(const strAVLData& prmAVLData) {
-			return attContent!= prmAVLData.attContent;
+			return attContent != prmAVLData.attContent;
 		}
 		/**
 		* @brief Sobreescritura del operador <
@@ -61,7 +61,7 @@ namespace libBinaryTree {
 		* @return true si se cumple la condicion de comparacion
 		*/
 		bool operator<(const strAVLData& prmAVLData) {
-			return attContent< prmAVLData.attContent;
+			return attContent < prmAVLData.attContent;
 		}
 		/**
 		* @brief Sobreescritura del operador <=
@@ -69,7 +69,7 @@ namespace libBinaryTree {
 		* @return true si se cumple la condicion de comparacion
 		*/
 		bool operator<=(const strAVLData& prmAVLData) {
-			return attContent<= prmAVLData.attContent;
+			return attContent <= prmAVLData.attContent;
 		}
 		/**
 		* @brief Sobreescritura del operador >
@@ -77,7 +77,7 @@ namespace libBinaryTree {
 		* @return true si se cumple la condicion de comparacion
 		*/
 		bool operator>(const strAVLData& prmAVLData) {
-			return attContent> prmAVLData.attContent;
+			return attContent > prmAVLData.attContent;
 		}
 		/**
 		* @brief Sobreescritura del operador <=
@@ -87,6 +87,7 @@ namespace libBinaryTree {
 		bool operator>=(const strAVLData& prmAVLData) {
 			return attContent >= prmAVLData.attContent;
 		}
+		#pragma endregion
 	};
 
 	template <class T>
@@ -99,9 +100,9 @@ namespace libBinaryTree {
 	#pragma region Operations
 		#pragma region CRUD
 		/**
-* @brief Se invoca cuando un nodo ha sido eliminado
-* @param prmFather Padre el nodo eliminado
-*/
+		* @brief Se invoca cuando un nodo ha sido eliminado
+		* @param prmFather Padre el nodo eliminado
+		*/
 		void opRemoved(strNode* prmFather) {
 			// Camino desde padre hasta la raiz
 			vector<strNode*> varBranch = this->opGetBranch(prmFather);
@@ -121,10 +122,10 @@ namespace libBinaryTree {
 		#pragma endregion
 		#pragma region Rotations
 		/**
-* @brief Rotacion a la izquierda
-* @param prmNode Nodo desbalanceado hacia la derecha
-* @return Nueva raiz del sub arbol balanceado
-*/
+		* @brief Rotacion a la izquierda
+		* @param prmNode Nodo desbalanceado hacia la derecha
+		* @return Nueva raiz del sub arbol balanceado
+		*/
 		strNode* opRotateLeft(strNode* prmNode) {
 			// Realizar la rotacion y retornar la raiz del sub arbol balanceado
 			return prmNode;
@@ -142,22 +143,21 @@ namespace libBinaryTree {
 	private:
 		#pragma region Utilities
 		/**
-* @brief Actualiza la altura de un nodo con base en sus sub arboles
-* @param n Nodo a actualizar
-*/
-		void actualizar_altura(strNode* prmNode) {
+		* @brief Actualiza la altura de un nodo con base en sus sub arboles
+		* @param prmNode Nodo a actualizar
+		*/
+		void opUpdateHeight(strNode* prmNode) {
 			// Actualizar la altura de n con base en altura(n->izq) y altura(n->der);			
 		}
 		/**
 		* @brief Retorna la altura de un nodo
-		* @param n Nodo a procesar
-		* @return Altura de n
+		* @param prmNode Nodo a procesar
+		* @return Altura de prmNode 
 		*/
-		int altura(strNode* prmNode) {
-			if (n == nullptr) {
-				return 0;
-			}
-			return n->dato.altura;
+		int opHeight(strNode* prmNode) {
+			if (prmNode == nullptr) return 0;
+
+			return prmNode->attData.attHeight;;
 		}
 		/**
 		* @brief Retorna el factor de balanceo de un nodo
