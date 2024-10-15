@@ -15,8 +15,7 @@ namespace libTree{
 	/**
 	* @brief Arbol n-ario
 	*/
-	class ADTN_AryTree {
-
+	class clsADTN_AryTree {
 	protected:
 		#pragma region Atributes and structs
 		// Declaracion hacia adelante de un nodo
@@ -135,7 +134,6 @@ namespace libTree{
 		/** @brief Limite de datos en un nodo */
 		int attLimit = data_limit;
 		#pragma endregion
-
 		ostream& opInorder(ostream& os, strNode* prmNode) {
 			if (prmNode == nullptr) return os;
 
