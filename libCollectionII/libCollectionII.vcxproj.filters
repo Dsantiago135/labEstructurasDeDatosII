@@ -24,9 +24,6 @@
     <ClCompile Include="libCollectionII.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Downloads\4.0_BASE_arbol_n_ario\4.0_BASE_arbol_n_ario\arbol_n_pruebas.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ADTBinaryTree.h">
@@ -44,13 +41,10 @@
     <ClInclude Include="ADTBinaryAVLTree.h">
       <Filter>Archivos de encabezado\pkgBinaryTree</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Downloads\4.0_BASE_arbol_n_ario\4.0_BASE_arbol_n_ario\arbol_123.h">
+    <ClInclude Include="ADTN_AryTree.h">
       <Filter>Archivos de encabezado\pkgN-Ario</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Downloads\4.0_BASE_arbol_n_ario\4.0_BASE_arbol_n_ario\arbol_n.h">
-      <Filter>Archivos de encabezado\pkgN-Ario</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Downloads\4.0_BASE_arbol_n_ario\4.0_BASE_arbol_n_ario\arbol_n_pruebas.h">
+    <ClInclude Include="ADT123_Tree.h">
       <Filter>Archivos de encabezado\pkgN-Ario</Filter>
     </ClInclude>
   </ItemGroup>
