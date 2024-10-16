@@ -143,20 +143,12 @@ namespace libBinaryTree {
 	private:
 		#pragma region Utilities
 		/**
-		* @brief Actualiza la altura de un nodo con base en sus sub arboles
-		* @param prmNode Nodo a actualizar
-		*/
-		void opUpdateHeight(strNode* prmNode) {
-			// Actualizar la altura de n con base en altura(n->izq) y altura(n->der);			
-		}
-		/**
 		* @brief Retorna la altura de un nodo
 		* @param prmNode Nodo a procesar
 		* @return Altura de prmNode 
 		*/
-		int opHeight(strNode* prmNode) {
+		int opNodeHeight(strNode* prmNode) {
 			if (prmNode == nullptr) return 0;
-
 			return prmNode->attData.attHeight;;
 		}
 		/**
@@ -165,8 +157,7 @@ namespace libBinaryTree {
 		* @return Factor de balanceo: altura(prmNode->attRight) - altura(prmNode->attLeft)
 		*/
 		int opBalancingFactor(strNode* prmNode) {
-			// Calcular y retornar el factor de balanceo
-			return 0;
+			return opNodeHeight(prmNode->attRight) - opNodeHeight(prmNode->attleft);
 		}
 		/**
 		* @brief Verifica el factor de balanceo de un conjunto de nodos
