@@ -2,7 +2,9 @@
 #include "ADTBinarySearchTree.h"
 #include "ADTBinaryExpressionTree.h"
 #include "ADTBinaryHuffmanTree.h"
+#include "ADTN_AryTree.h"
 
+using namespace libTree;
 using namespace libBinaryTree;
 
 int main() {
@@ -32,5 +34,19 @@ int main() {
     varExpresionTree.opShowExpressionTree();
 
     cout << endl << "Prueba arbol AVL:"<< endl;
+
+    cout << endl << "Prueba arbol N_Ario:" << endl;
+    clsADTN_AryTree<int, 4> directory;
+    directory.opInsert(1);
+    directory.opInsert(5);
+    directory.opInsert(35);
+    directory.opInsert(87);
+    directory.opInsert(23);
+    directory.opInsert(3);
+    directory.opInsert(67);
+    directory.opInsert(31);
+    directory.opInsert(89);
+    directory.opInsert(12);
+    directory.opInorder(cout);
     return 0;
 }

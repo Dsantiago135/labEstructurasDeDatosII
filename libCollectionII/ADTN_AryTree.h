@@ -7,6 +7,7 @@
 using std::cout;
 using std::endl;
 
+using std::sort;
 using std::ostream;
 using std::vector;
 
@@ -49,7 +50,7 @@ namespace libTree{
 			* @param rhs Dato a comparar
 			* @return true si el valor almacenado en este dato es menor al dato
 			*/
-			bool operator<(T rhs) {
+			bool operator < (T rhs) {
 				return attValue < rhs;
 			}
 			/**
@@ -76,16 +77,26 @@ namespace libTree{
 			bool operator >= (T rhs) {
 				return attValue >= rhs;
 			}
+			/**/
+			bool operator < (strDataNode prmNode) {
+				return attValue < prmNode.attValue;
+			}
+			bool operator > (strDataNode prmNode) {
+				return attValue > prmNode.attValue;
+			}
+			bool operator == (strDataNode prmNode) {
+				return attValue == prmNode.attValue;
+			}
 #pragma endregion
 		};
 		/**
 		* @brief Nodo
 		*/
-		struct StrNode {
+		struct strNode {
 			int attHeight = 1; /*!< Altura del sub arbol que comienza en este nodo */
 			bool attLeaf = true; /*!< Verdadero si este nodo no tiene hijos */
 			vector<strDataNode> attData; /*!< Lista de datos dentro de este nodo */
-			StrNode* attFather = nullptr; /*!< Referencia al nodo padre */
+			strNode* attFather = nullptr; /*!< Referencia al nodo padre */
 			int attLimit = data_limit; /*!< Cantidad maxima de datos que se pueden almacenar en este nodo */
 #pragma region OperationsNode
 			/**
@@ -110,10 +121,24 @@ namespace libTree{
 			bool opItsEmpty() {
 				return attData.size() == 0;
 			}
-			strDataNode& ultimo() {
+			void opInsertInNode(strDataNode prmData) {
+				//inserta un nodo binario en el arreglo del nodo N-ario
+				attData.push_back(prmData);
+				//ordena de menor a mayor el vector
+				sort(attData.begin(), attData.end());
+			}
+			void opInsertInNode(T prmData) {
+				strDataNode varNode;
+				varNode.attValue = T;
+				//inserta un nodo binario en el arreglo del nodo N-ario
+				attData.push_back(varNode);
+				//ordena de menor a mayor el vector
+				sort(attData.begin(), attData.end());
+			}
+			strDataNode& opLast() {
 				return attData[attData.size() - 1];
 			}
-			strDataNode& primero() {
+			strDataNode& opFirst() {
 				return attData[0];
 			}
 			friend ostream& operator<<(ostream& os, strNode& n) {
@@ -130,13 +155,90 @@ namespace libTree{
 		/**
 		* @brief Raiz del arbol.
 		*/
-		StrNode* attRoot = nullptr;
+		strNode* attRoot = nullptr;
 		/** @brief Limite de datos en un nodo */
 		int attLimit = data_limit;
 		#pragma endregion
+		void opInsert(strNode* prmNode, strDataNode prmData) {
+			//si el nodo es nulo se crea un nodo y pone como raiz (el unico momento cuando nodo es nulo es cuando no hay raiz)//
+			if (prmNode == nullptr) {
+				strNode* varNewNode = new strNode;
+				varNewNode->opInsertInNode(prmData);
+				this->attRoot = varNewNode;
+				return;
+			}
+			//el nodo tiene espacio
+			if (prmNode->attLeaf) {
+				if (!prmNode->opItsFull()) {
+					prmNode->opInsertInNode(prmData);
+					return;
+				}
+			}
+			//el nodo esta lleno
+			else {
+				//el dato es menor al primer valor del nodo
+				if (prmData<prmNode->opFirst()) {
+					//el primer nodo no tiene izquierdo
+					if (prmNode->opFirst().attLeft == nullptr) {
+						strNode* varNode = new strNode;
+						prmNode->attData[0].attLeft = varNode;
+						prmNode->attHeight++;
+						prmNode->attLeaf = false;
+						varNode->attFather = prmNode;
+						opInsert(prmNode->opFirst().attLeft, prmData);
+						return;
+					}
+					//ya hay un hijo a donde insertar
+					else {
+						opInsert(prmNode->opFirst().attLeft, prmData);
+						return;
+					}
+				}
+				//el dato es mayor al ultimo valor del nodo
+				else if (prmData > prmNode->opLast()) {
+					//el ultimo nodo no tiene derecho
+					if (prmNode->opLast().attRight == nullptr) {
+						strNode* varNode = new strNode;
+ 						prmNode->opLast().attRight = varNode;
+						prmNode->attHeight++;
+						prmNode->attLeaf = false;
+						varNode->attFather = prmNode;
+						opInsert(prmNode->opLast().attRight, prmData);
+						return;
+					}
+					//ya hay un hijo a donde insertar
+					else {
+						opInsert(prmNode->opLast().attRight, prmData);
+						return;
+					}
+				}
+				//el dato es mayor al primer valor del nodo y menor al ultimo valor del nodo
+				else  {
+					//busca el nodo al que corresponde
+					for (int i = 1; i < prmNode->attData.size()-1; i++) {
+						if (prmData<prmNode->attData[i]){
+							//el nodo hijo no existe
+							if(prmNode->attData[i].attLeft==nullptr) {
+								strNode* varNode = new strNode;
+								prmNode->attData[i].attLeft = varNode;
+								prmNode->attData[i-1].attRight= varNode;
+								prmNode->attHeight++;
+								prmNode->attLeaf = false;
+								varNode->attFather = prmNode;
+								opInsert(prmNode->attData[i].attLeft, prmData);
+								return;
+							}
+							//el nodo hijo existe
+							else {
+								return opInsert(prmNode->attData[i].attLeft, prmData);
+							}
+						}
+					}
+				}
+			}
+		}
 		ostream& opInorder(ostream& os, strNode* prmNode) {
 			if (prmNode == nullptr) return os;
-
 			for (size_t i = 0; i < prmNode->attData.size(); i++) {
 				// Sub arbol izquierdo
 				if (i == 0) {
@@ -150,6 +252,11 @@ namespace libTree{
 			return os;
 		}
 	public:
+		void opInsert(T prmData) {
+			strDataNode varNewDataNode;
+			varNewDataNode.attValue = prmData;
+			opInsert(attRoot, varNewDataNode);
+		}
 		/**
 		* @brief Recorrido inorden del arbol
 		* @param os Fujo de salida

@@ -3,6 +3,7 @@
 #include <vector>
 #include "ADTBinaryTree.h"
 
+using std::vector;
 using std::cout;
 using std::endl;
 using libBinaryTree::ADTBinaryTree;
@@ -178,18 +179,21 @@ namespace libBinaryTree {
 			prmNode = prmNode->attRight;
 			return this->opGoExtremeLeft(prmNode);
 		}
+		/*
+		*@brief obtiene la rama del node
+		*/
 		vector<strNode*> opGetBranch(strNode* prmNode) {
 			vector<strNode*> varBranch;
 			strNode* varNode = this->attRoot;
 			while (varNode != nullptr && varNode->attData != prmNode->attData) {
 				varBranch.insert(varBranch.begin(), varNode);
-				if (varNode->attData > prmNode->attData) {
-					varNode = varNode->attLeft;
-				}
+				if (varNode->attData > prmNode->attData) varNode = varNode->attLeft;
 				else varNode = varNode->attRigth;
+				varBranch.push_back(varNode);
 			}
+			return varBranch;
 		}
-#pragma endregion 
+#pragma endregion
 	public:
 	#pragma region CRUD
 		/**
