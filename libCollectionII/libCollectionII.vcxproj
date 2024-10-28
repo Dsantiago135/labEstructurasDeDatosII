@@ -138,6 +138,7 @@
     <ClInclude Include="ADTBinarySearchTree.h" />
     <ClInclude Include="ADTBinaryTree.h" />
     <ClInclude Include="ADTN_AryTree.h" />
+    <ClInclude Include="clsPerson.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,6 +3,7 @@
 #include "ADTBinaryExpressionTree.h"
 #include "ADTBinaryHuffmanTree.h"
 #include "ADTN_AryTree.h"
+#include "clsPerson.h"
 
 using namespace libTree;
 using namespace libBinaryTree;
@@ -48,5 +49,8 @@ int main() {
     directory.opInsert(89);
     directory.opInsert(12);
     directory.opInorder(cout);
+
+    clsPerson varperson(2345679345,"Juan","Perez","1234567","cers34567","345678","34567");
+    cout <<varperson <<endl;
     return 0;
 }
