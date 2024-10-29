@@ -130,7 +130,6 @@
     <ClCompile Include="libCollectionII.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\..\Downloads\4.0_BASE_arbol_n_ario\4.0_BASE_arbol_n_ario\split.h" />
     <ClInclude Include="ADT123_Tree.h" />
     <ClInclude Include="ADTBinaryAVLTree.h" />
     <ClInclude Include="ADTBinaryExpressionTree.h" />
@@ -138,6 +137,7 @@
     <ClInclude Include="ADTBinarySearchTree.h" />
     <ClInclude Include="ADTBinaryTree.h" />
     <ClInclude Include="ADTN_AryTree.h" />
+    <ClInclude Include="ADT_B_Tree.h" />
     <ClInclude Include="clsPerson.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

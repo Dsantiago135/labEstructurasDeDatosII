@@ -47,11 +47,11 @@
     <ClInclude Include="ADT123_Tree.h">
       <Filter>Archivos de encabezado\pkgN-Ario</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Downloads\4.0_BASE_arbol_n_ario\4.0_BASE_arbol_n_ario\split.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="clsPerson.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="ADT_B_Tree.h">
+      <Filter>Archivos de encabezado\pkgN-Ario</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

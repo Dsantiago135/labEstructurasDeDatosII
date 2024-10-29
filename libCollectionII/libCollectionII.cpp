@@ -2,7 +2,7 @@
 #include "ADTBinarySearchTree.h"
 #include "ADTBinaryExpressionTree.h"
 #include "ADTBinaryHuffmanTree.h"
-#include "ADTN_AryTree.h"
+#include "ADT_B_Tree.h"
 #include "clsPerson.h"
 
 using namespace libTree;
@@ -37,7 +37,7 @@ int main() {
     cout << endl << "Prueba arbol AVL:"<< endl;
 
     cout << endl << "Prueba arbol N_Ario:" << endl;
-    clsADTN_AryTree<int, 4> directory;
+    clsADT_B_Tree<int, 4> directory;
     directory.opInsert(1);
     directory.opInsert(5);
     directory.opInsert(35);
@@ -48,9 +48,8 @@ int main() {
     directory.opInsert(31);
     directory.opInsert(89);
     directory.opInsert(12);
+
     directory.opInorder(cout);
 
-    clsPerson varperson(2345679345,"Juan","Perez","1234567","cers34567","345678","34567");
-    cout <<varperson <<endl;
     return 0;
 }
