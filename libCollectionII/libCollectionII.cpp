@@ -50,6 +50,8 @@ int main() {
     directory.opInsert(12);
 
     directory.opInorder(cout);
+    cout << endl;
+    directory.opSearch(23);
 
     return 0;
 }

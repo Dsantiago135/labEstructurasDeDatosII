@@ -214,74 +214,112 @@ namespace libTree {
 	#pragma endregion
 	#pragma region Operations
 	private:
-		// Método para insertar un dato en el árbol
-		void opInsert(strNode* prmNode, strDataNode prmData) {
-			// Primera inserción: crea la raíz si no existe.
-			if (attRoot == nullptr) {
+		/**
+		* @brief Método para insertar un dato en el árbol
+		* @param prmNode nodo donde se inserta el dato
+		* @param prmData dato a insertar en el nodo
+		* @param prmItsFather identificador si se esta insertando un dato o padre
+		*/
+		void opInsert(strNode* prmNode, strDataNode prmData, bool prmItsFather) {
+			//si el nodo es nullo
+			if (prmNode == nullptr) {
 				strNode* newRoot = new strNode;
 				newRoot->opInsertInNode(prmData);
 				attRoot = newRoot;
+				if (prmItsFather == true) {
+					newRoot->attLeaf = false;
+					prmData.attLeft->attFather = newRoot;
+				}
 				return;
 			}
-
-			// Si el nodo es hoja.
-			if (prmNode->attLeaf) {
-				// Caso 1: nodo hoja con espacio.
+			//el nodo es una hoja o es una inserción de un padre
+			if (prmNode->attLeaf || prmItsFather) {
+				//el nodo tiene espacio
 				if (!prmNode->opItsFull()) {
-					prmNode->opInsertInNode(prmData);  // Inserta y termina.
+					if (prmItsFather == true) 
+					{
+						prmNode->attLeaf = false;
+						prmData.attLeft->attFather = prmNode;
+					}
+					return prmNode->opInsertInNode(prmData);
+				}
+				//el nodo no tiene espacio
+				else {
+					//se inserta el dato y colapsa el arreglo
+					prmNode->opInsertInNode(prmData);
+					//se obtiene la posición del dato medio
+					int varMiddle = (prmNode->opCount() - 1) / 2;
+					//se crea el hermano que almacenara los datos mayores al dato medio
+					strNode* varBrotherNode = new strNode;
+					//transferencia de datos
+					for (int i = varMiddle + 1; i < prmNode->opCount(); i++) {
+						varBrotherNode->opInsertInNode(prmNode->attData[i]);
+					}
+					//eliminación de los datos ya pasados
+					prmNode->attData.erase(prmNode->attData.begin() + varMiddle + 1, prmNode->attData.end());
+					//actualización de referencias
+					prmNode->attData[varMiddle].attLeft = prmNode;
+					prmNode->attData[varMiddle].attRight = varBrotherNode;
+					opInsert(prmNode->attFather,prmNode->attData[varMiddle], true);
+					prmNode->attData.pop_back();
+					varBrotherNode->attFather = prmNode->attFather;
+					prmNode->attFather->attHeight++;
 					return;
 				}
-
-				// Caso 2: nodo hoja lleno, debe dividirse.
-				prmNode->opInsertInNode(prmData); // Inserta el dato antes de dividir.
-
-				// Obtiene el índice del valor medio.
-				int midIndex = prmNode->attData.size() / 2;
-				strDataNode middleData = prmNode->attData[midIndex];
-
-				// Crea nuevo nodo derecho y mueve los datos mayores.
-				strNode* rightNode = new strNode;
-				for (size_t i = midIndex + 1; i < prmNode->attData.size(); ++i) {
-					rightNode->opInsertInNode(prmNode->attData[i]);
+			}
+			//si el nodo no es hoja se busca al nodo correspondiente
+			else {
+				//el dato es menor al dato menor del nodo
+				if (prmData<prmNode->opFirst()) {
+					return opInsert(prmNode->opFirst().attLeft, prmData, false);
 				}
-				prmNode->attData.erase(prmNode->attData.begin() + midIndex, prmNode->attData.end());
-
-				// Si no hay padre, crea uno.
-				if (prmNode->attFather == nullptr) {
-					strNode* newRoot = new strNode;
-					newRoot->opInsertInNode(middleData); // Subir el valor medio.
-					attRoot = newRoot; // Actualiza la raíz.
-
-					newRoot->attLeaf = false;
-					middleData.attLeft = prmNode;
-					middleData.attRight = rightNode;
-
-					prmNode->attFather = newRoot;
-					rightNode->attFather = newRoot;
+				//el dato es mayor al dato mayor del nodo
+				else if (prmData>prmNode->opLast()) {
+					return opInsert(prmNode->opLast().attRight, prmData, false);
 				}
+				//la posición del dato es entre 2 datos del nodo
 				else {
-					// Si hay padre, subir el valor medio recursivamente.
-					middleData.attLeft = prmNode;
-					middleData.attRight = rightNode;
-
-					prmNode->attFather->attLeaf = false; // El padre ya no es hoja.
-					opInsert(prmNode->attFather, middleData);
+					//recorre el vector buscardo el dato que apunte al nodo necesario(donde se insertará el dato)
+					for (int i = 0; prmData < prmNode->attData[i]; i++) {
+						if (prmData < prmNode->attData[i]) {
+							return opInsert(prmNode->attData[i].attLeft, prmData, false);
+						}
+					}
 				}
 			}
-			else {
-				// Si el nodo no es hoja, recorre los hijos para encontrar dónde insertar.
-				for (auto& dataNode : prmNode->attData) {
-					if (prmData.attValue < dataNode.attValue) {
-						opInsert(dataNode.attLeft, prmData);
+		}
+		void opSearch(strNode* prmNode, T prmData) {
+			//si el nodo es nulo no haga nada 
+			if (prmNode == nullptr) return ;
+			//el dato esta en el nodo
+			if (prmNode->opContains(prmData)) {
+				for (int i = 0;i<prmNode->opCount();i++) {
+					if (prmNode->attData[i] == prmData) {
+						cout<<"Dato encontrado ;D" << endl;
+						cout<<prmNode->attData[i].attValue<<endl;
 						return;
 					}
 				}
-				// Si no se insertó, va al último hijo derecho.
-				opInsert(prmNode->attData.back().attRight, prmData);
 			}
-		}
-		T opSearch(strNode* prmNode, T prmData ) {
-
+			//el dato no esta en el nodo
+			else {
+				//el dato a buscar es menor al primer dato del arreglo
+				if (prmNode->opFirst() > prmData) {
+					return opSearch(prmNode->opFirst().attLeft, prmData);
+				}
+				//el dato a buscar es mayor al ultimo dato del arreglo
+				else if (prmNode->opLast() < prmData) {
+					return opSearch(prmNode->opLast().attRight, prmData);
+				}
+				//el dato a buscar esta en un nodo hijo intermedio
+				else {
+					for (int i = 1; i < prmNode->opCount(); i++) {
+						if (prmNode->attData[i] > prmData) {
+							return opSearch(prmNode->attData[i].attLeft, prmData);
+						}
+					}
+				}
+			}
 		}
 		ostream& opInorder(ostream& os, strNode* prmNode) {
 			if (prmNode == nullptr) return os;
@@ -309,7 +347,7 @@ namespace libTree {
 			//guarda el dato en un nodo binario y lo inserta
 			strDataNode varDataNode; 
 			varDataNode.attValue = prmData; 
-			opInsert(attRoot,varDataNode); 
+			opInsert(attRoot,varDataNode,false); 
 		}
 		/**
 		* @brief Busca un dato en el árbol
@@ -317,7 +355,7 @@ namespace libTree {
 		* @return el Dato que se obtuvo
 		*/
 		void opSearch(T prmData) {
-			T varDato = opSearch(attRoot, prmData);
+			opSearch(attRoot, prmData);
 		}
 		#pragma endregion 
 	};
