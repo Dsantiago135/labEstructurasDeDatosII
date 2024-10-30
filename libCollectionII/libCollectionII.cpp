@@ -5,6 +5,7 @@
 #include "ADT_B_Tree.h"
 #include "clsPerson.h"
 
+using std::cin;
 using namespace libTree;
 using namespace libBinaryTree;
 
@@ -39,8 +40,7 @@ int main() {
     cout << endl << "Prueba arbol N_Ario:" << endl;
     clsADT_B_Tree<clsPerson, 3> directory;
     directory.opDeserialize("Prueba.csv");
-    directory.opInorder(cout);
-    directory.opSearch(123456432);
+    directory.opMenu();
     cout << endl;
     return 0;
 }

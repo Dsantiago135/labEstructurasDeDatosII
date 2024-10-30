@@ -9,6 +9,7 @@
 #include "clsPerson.h"
 
 using std::cout;
+using std::cin;
 using std::endl;
 using std::getline;
 using std::ifstream;
@@ -295,7 +296,7 @@ namespace libTree {
 				//la posición del dato es entre 2 datos del nodo
 				else {
 					//recorre el vector buscardo el dato que apunte al nodo necesario(donde se insertará el dato)
-					for (int i = 0; prmData < prmNode->attData[i]; i++) {
+					for (int i = 1; prmData < prmNode->attData[i]; i++) {
 						if (prmData < prmNode->attData[i]) {
 							return opInsert(prmNode->attData[i].attLeft, prmData, false);
 						}
@@ -315,10 +316,10 @@ namespace libTree {
 			if (prmNode->opContains(prmData)) {
 				for (int i = 0;i<prmNode->opCount();i++) {
 					if (prmNode->attData[i].attValue == prmData) {
+						prmConteo++;
 						cout<<"Dato encontrado ;D" << endl;
 						cout << "el numero de recorrido para encontrar el dato fue: " << prmConteo << endl;
 						cout<<prmNode->attData[i].attValue<<endl;
-						prmConteo++;
 						return;
 					}
 				}
@@ -409,10 +410,30 @@ namespace libTree {
 				getline(stream, longitud, delimitador);
 				getline(stream, latitud, delimitador);
 				int intIdentificacion = std::stoi(identificacion); // Convierte el string a un int
+				//creacion de una persona a partir de los datos obtenidos
 				clsPerson varPerson(intIdentificacion, nombre, apellido, telefono, direccion, longitud, latitud);
+				// se inserta la persona en el arbol
 				opInsert(varPerson);
 			}
 			archivo.close();
+		}
+		/**
+		* @brief este menu ofrece  2 opciones buscas a alguien o te vas ;D
+		*/
+		void opMenu() {
+			bool varFollow;
+			char varAnswer;
+			int varId;
+			do {
+				varFollow = false;
+				cout << "inserta un numero de identificacion para buscar una persona " << endl;
+				cin >> varId;
+				opSearch(varId);
+				cout << "gustas buscar a alguien más?" << endl;
+				cout << "digita Y para seguir" << endl;
+				cin >> varAnswer;
+				if (varAnswer == 'Y' || varAnswer == 'y') varFollow = true;
+			} while (varFollow);
 		}
 		#pragma endregion 
 	};
