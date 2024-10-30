@@ -1,14 +1,20 @@
 #pragma once
 
+#include <fstream>
+#include <sstream>
 #include <iostream>
 #include <cstddef>
 #include <vector>
 #include <algorithm>
+#include "clsPerson.h"
 
 using std::cout;
 using std::endl;
-using std::sort;
+using std::getline;
+using std::ifstream;
 using std::ostream;
+using std::sort;
+using std::string;
 using std::vector;
 
 namespace libTree {
@@ -136,7 +142,7 @@ namespace libTree {
 				* @brief Cuenta los datos almacenados en el vector del nodo
 				* @return Número de datos almacenados
 				*/
-				int opCount() {
+				size_t opCount() {
 					return attData.size();
 				}
 				/**
@@ -248,11 +254,11 @@ namespace libTree {
 					//se inserta el dato y colapsa el arreglo
 					prmNode->opInsertInNode(prmData);
 					//se obtiene la posición del dato medio
-					int varMiddle = (prmNode->opCount() - 1) / 2;
+					size_t varMiddle = (prmNode->opCount() - 1) / 2;
 					//se crea el hermano que almacenara los datos mayores al dato medio
 					strNode* varBrotherNode = new strNode;
 					//transferencia de datos
-					for (int i = varMiddle + 1; i < prmNode->opCount(); i++) {
+					for (size_t i = varMiddle + 1; i < prmNode->opCount(); i++) {
 						varBrotherNode->opInsertInNode(prmNode->attData[i]);
 					}
 					//eliminación de los datos ya pasados
@@ -288,7 +294,12 @@ namespace libTree {
 				}
 			}
 		}
-		void opSearch(strNode* prmNode, T prmData) {
+		/*
+		* @brief Itera en el árbol bucando el dato y al encontrarlo lo muestra por pantalla
+		* @param prmNode Nodo donde se buscará el dato
+		* @param prmData dato a buscar
+		*/
+		void opSearch(strNode* prmNode, int prmData) {
 			//si el nodo es nulo no haga nada 
 			if (prmNode == nullptr) return ;
 			//el dato esta en el nodo
@@ -345,17 +356,48 @@ namespace libTree {
 		*/
 		void opInsert(T prmData) {
 			//guarda el dato en un nodo binario y lo inserta
-			strDataNode varDataNode; 
-			varDataNode.attValue = prmData; 
-			opInsert(attRoot,varDataNode,false); 
+			strDataNode varDataNode;
+			varDataNode.attValue = prmData;
+			opInsert(attRoot,varDataNode,false);
 		}
 		/**
 		* @brief Busca un dato en el árbol
-		* @param Dato a buscar
-		* @return el Dato que se obtuvo
+		* @param Dato a buscar (en este caso se usa int porque se usara la identificación de una persona)
+		* @return el Dato que se obtuvo 
 		*/
-		void opSearch(T prmData) {
+		void opSearch(int prmData) {
 			opSearch(attRoot, prmData);
+		}
+		/**
+		* @brief llena un árbol con un archivo csv (debido al requerimiento del proyecto se usaran objetos persona para llenar el árbol)
+		* @param prmFilePath Archivo a deserializar
+		*/
+		void opDeserialize(string prmFilePath) {
+			ifstream archivo(prmFilePath);
+			string linea;
+			char delimitador = ';';
+			if (!archivo.is_open()) {
+				cout << "No se pudo abrir el archivo." << endl;
+				return;
+			}
+			// Leemos todas las líneas
+			while (getline(archivo, linea))
+			{
+				std::istringstream stream(linea); // Convertir la cadena a un stream 
+				string identificacion, nombre, apellido, telefono, direccion, longitud, latitud;
+				// Extraer todos los valores de esa fila
+				getline(stream, identificacion, delimitador);
+				getline(stream, nombre, delimitador);
+				getline(stream, apellido, delimitador);
+				getline(stream, telefono, delimitador);
+				getline(stream, direccion, delimitador);
+				getline(stream, longitud, delimitador);
+				getline(stream, latitud, delimitador);
+				int intIdentificacion = std::stoi(identificacion); // Convierte el string a un int
+				clsPerson varPerson(intIdentificacion, nombre, apellido, telefono, direccion, longitud, latitud);
+				opInsert(varPerson);
+			}
+			archivo.close();
 		}
 		#pragma endregion 
 	};

@@ -54,4 +54,12 @@
       <Filter>Archivos de encabezado\pkgN-Ario</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\..\Downloads\data.csv">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="Prueba.csv">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+  </ItemGroup>
 </Project>

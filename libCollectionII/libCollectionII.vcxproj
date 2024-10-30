@@ -140,6 +140,10 @@
     <ClInclude Include="ADT_B_Tree.h" />
     <ClInclude Include="clsPerson.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\..\Downloads\data.csv" />
+    <None Include="Prueba.csv" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

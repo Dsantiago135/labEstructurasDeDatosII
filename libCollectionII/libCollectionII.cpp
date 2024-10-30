@@ -37,21 +37,10 @@ int main() {
     cout << endl << "Prueba arbol AVL:"<< endl;
 
     cout << endl << "Prueba arbol N_Ario:" << endl;
-    clsADT_B_Tree<int, 4> directory;
-    directory.opInsert(1);
-    directory.opInsert(5);
-    directory.opInsert(35);
-    directory.opInsert(87);
-    directory.opInsert(23);
-    directory.opInsert(3);
-    directory.opInsert(67);
-    directory.opInsert(31);
-    directory.opInsert(89);
-    directory.opInsert(12);
-
+    clsADT_B_Tree<clsPerson, 3> directory;
+    directory.opDeserialize("Prueba.csv");
     directory.opInorder(cout);
+    directory.opSearch(123456432);
     cout << endl;
-    directory.opSearch(23);
-
     return 0;
 }
