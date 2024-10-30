@@ -138,6 +138,15 @@ namespace libTree {
 					}
 					return false;
 				}
+				//sobrecarga para uso exclusivo de clsPersona
+				bool opContains(int prmData) {
+					for (int i = 0;i < opCount();i++) {
+						if (attData[i].attValue==prmData) {
+							return true;
+						}
+					}
+					return false;
+				}
 				/**
 				* @brief Cuenta los datos almacenados en el vector del nodo
 				* @return Número de datos almacenados
@@ -254,7 +263,7 @@ namespace libTree {
 					//se inserta el dato y colapsa el arreglo
 					prmNode->opInsertInNode(prmData);
 					//se obtiene la posición del dato medio
-					size_t varMiddle = (prmNode->opCount() - 1) / 2;
+					size_t varMiddle = (prmNode->opCount()) / 2;
 					//se crea el hermano que almacenara los datos mayores al dato medio
 					strNode* varBrotherNode = new strNode;
 					//transferencia de datos
@@ -299,15 +308,17 @@ namespace libTree {
 		* @param prmNode Nodo donde se buscará el dato
 		* @param prmData dato a buscar
 		*/
-		void opSearch(strNode* prmNode, int prmData) {
+		void opSearch(strNode* prmNode, int prmData, int& prmConteo) {
 			//si el nodo es nulo no haga nada 
 			if (prmNode == nullptr) return ;
 			//el dato esta en el nodo
 			if (prmNode->opContains(prmData)) {
 				for (int i = 0;i<prmNode->opCount();i++) {
-					if (prmNode->attData[i] == prmData) {
+					if (prmNode->attData[i].attValue == prmData) {
 						cout<<"Dato encontrado ;D" << endl;
+						cout << "el numero de recorrido para encontrar el dato fue: " << prmConteo << endl;
 						cout<<prmNode->attData[i].attValue<<endl;
+						prmConteo++;
 						return;
 					}
 				}
@@ -315,18 +326,21 @@ namespace libTree {
 			//el dato no esta en el nodo
 			else {
 				//el dato a buscar es menor al primer dato del arreglo
-				if (prmNode->opFirst() > prmData) {
-					return opSearch(prmNode->opFirst().attLeft, prmData);
+				if (prmNode->opFirst().attValue > prmData) {
+					prmConteo++;
+					return opSearch(prmNode->opFirst().attLeft, prmData, prmConteo);
 				}
 				//el dato a buscar es mayor al ultimo dato del arreglo
-				else if (prmNode->opLast() < prmData) {
-					return opSearch(prmNode->opLast().attRight, prmData);
+				else if (prmNode->opLast().attValue < prmData) {
+					prmConteo++;
+					return opSearch(prmNode->opLast().attRight, prmData, prmConteo);
 				}
 				//el dato a buscar esta en un nodo hijo intermedio
 				else {
 					for (int i = 1; i < prmNode->opCount(); i++) {
-						if (prmNode->attData[i] > prmData) {
-							return opSearch(prmNode->attData[i].attLeft, prmData);
+						if (prmNode->attData[i].attValue > prmData) {
+							prmConteo++;
+							return opSearch(prmNode->attData[i].attLeft, prmData,prmConteo);
 						}
 					}
 				}
@@ -366,7 +380,8 @@ namespace libTree {
 		* @return el Dato que se obtuvo 
 		*/
 		void opSearch(int prmData) {
-			opSearch(attRoot, prmData);
+			int varCount = 0;
+			opSearch(attRoot, prmData, varCount);
 		}
 		/**
 		* @brief llena un árbol con un archivo csv (debido al requerimiento del proyecto se usaran objetos persona para llenar el árbol)
