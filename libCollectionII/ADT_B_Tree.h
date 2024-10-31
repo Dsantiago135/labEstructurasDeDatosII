@@ -192,12 +192,6 @@ namespace libTree {
 					attData.push_back(varNode);
 					//ordena de menor a mayor el vector
 					sort(attData.begin(), attData.end());
-					// Impresión para verificación del estado del nodo tras la inserción
-					cout << "Estado del nodo tras opInsertInNode (con T): [";
-					for (const auto& d : attData) {
-						cout << d.attValue << " ";
-					}
-					cout << "]" << endl;
 				}
 				/**
 				* @brief Va al ultimo dato del vector
@@ -266,7 +260,7 @@ namespace libTree {
 					//se inserta el dato y colapsa el arreglo
 					prmNode->opInsertInNode(prmData);
 					//se obtiene la posición del dato medio
-					size_t varMiddle = (prmNode->attData.size() - 1) / 2;
+					size_t varMiddle = (prmNode->attData.size()-1) / 2;
 					//se crea el hermano que almacenara los datos mayores al dato medio
 					strNode* varBrotherNode = new strNode;
 					//transferencia de datos
@@ -292,7 +286,7 @@ namespace libTree {
 					return opInsert(prmNode->opFirst().attLeft, prmData, false);
 				}
 				//el dato es mayor al dato mayor del nodo
-				else if (prmData>prmNode->opLast()) {
+				else if (prmData > prmNode->opLast()) {
 					return opInsert(prmNode->opLast().attRight, prmData, false);
 				}
 				//la posición del dato es entre 2 datos del nodo
