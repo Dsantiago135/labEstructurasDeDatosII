@@ -192,6 +192,12 @@ namespace libTree {
 					attData.push_back(varNode);
 					//ordena de menor a mayor el vector
 					sort(attData.begin(), attData.end());
+					// Impresión para verificación del estado del nodo tras la inserción
+					cout << "Estado del nodo tras opInsertInNode (con T): [";
+					for (const auto& d : attData) {
+						cout << d.attValue << " ";
+					}
+					cout << "]" << endl;
 				}
 				/**
 				* @brief Va al ultimo dato del vector
@@ -253,11 +259,6 @@ namespace libTree {
 			if (prmNode->attLeaf || prmItsFather) {
 				//el nodo tiene espacio
 				if (!prmNode->opItsFull()) {
-					if (prmItsFather == true) 
-					{
-						prmNode->attLeaf = false;
-						prmData.attLeft->attFather = prmNode;
-					}
 					return prmNode->opInsertInNode(prmData);
 				}
 				//el nodo no tiene espacio
