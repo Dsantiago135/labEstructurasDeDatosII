@@ -140,8 +140,9 @@ namespace libTree {
 					return false;
 				}
 				//sobrecarga para uso exclusivo de clsPersona
-				bool opContains(int prmData) {
+				bool opContains(int prmData, int& varCount) {
 					for (int i = 0;i < opCount();i++) {
+						varCount++;
 						if (attData[i].attValue==prmData) {
 							return true;
 						}
@@ -264,7 +265,7 @@ namespace libTree {
 					//se inserta el dato y colapsa el arreglo
 					prmNode->opInsertInNode(prmData);
 					//se obtiene la posición del dato medio
-					size_t varMiddle = (prmNode->opCount()) / 2;
+					size_t varMiddle = (prmNode->opCount()-1) / 2;
 					//se crea el hermano que almacenara los datos mayores al dato medio
 					strNode* varBrotherNode = new strNode;
 					//transferencia de datos
@@ -311,15 +312,14 @@ namespace libTree {
 		*/
 		void opSearch(strNode* prmNode, int prmData, int& prmConteo) {
 			//si el nodo es nulo no haga nada 
-			if (prmNode == nullptr) return ;
+			if (prmNode == nullptr) return;
 			//el dato esta en el nodo
-			if (prmNode->opContains(prmData)) {
-				for (int i = 0;i<prmNode->opCount();i++) {
+			if (prmNode->opContains(prmData, prmConteo)) {
+				for (int i = 0; i < prmNode->opCount(); i++) {
 					if (prmNode->attData[i].attValue == prmData) {
-						prmConteo++;
-						cout<<"Dato encontrado ;D" << endl;
+						cout << "Dato encontrado ;D" << endl;
 						cout << "el numero de recorrido para encontrar el dato fue: " << prmConteo << endl;
-						cout<<prmNode->attData[i].attValue<<endl;
+						cout << prmNode->attData[i].attValue << endl;
 						return;
 					}
 				}
@@ -327,21 +327,23 @@ namespace libTree {
 			//el dato no esta en el nodo
 			else {
 				//el dato a buscar es menor al primer dato del arreglo
+				prmConteo++;
 				if (prmNode->opFirst().attValue > prmData) {
-					prmConteo++;
 					return opSearch(prmNode->opFirst().attLeft, prmData, prmConteo);
 				}
 				//el dato a buscar es mayor al ultimo dato del arreglo
-				else if (prmNode->opLast().attValue < prmData) {
-					prmConteo++;
-					return opSearch(prmNode->opLast().attRight, prmData, prmConteo);
-				}
-				//el dato a buscar esta en un nodo hijo intermedio
 				else {
-					for (int i = 1; i < prmNode->opCount(); i++) {
-						if (prmNode->attData[i].attValue > prmData) {
+					prmConteo++;
+					if (prmNode->opLast().attValue < prmData) {
+						return opSearch(prmNode->opLast().attRight, prmData, prmConteo);
+					}
+					//el dato a buscar esta en un nodo hijo intermedio
+					else {
+						for (int i = 1; i < prmNode->opCount(); i++) {
 							prmConteo++;
-							return opSearch(prmNode->attData[i].attLeft, prmData,prmConteo);
+							if (prmNode->attData[i].attValue > prmData) {
+								return opSearch(prmNode->attData[i].attLeft, prmData, prmConteo);
+							}
 						}
 					}
 				}
@@ -382,6 +384,7 @@ namespace libTree {
 		*/
 		void opSearch(int prmData) {
 			int varCount = 0;
+			cout<<"-------------------------------------------------------------------------------------------------"<< endl;
 			opSearch(attRoot, prmData, varCount);
 		}
 		/**
@@ -429,7 +432,7 @@ namespace libTree {
 				cout << "inserta un numero de identificacion para buscar una persona " << endl;
 				cin >> varId;
 				opSearch(varId);
-				cout << "gustas buscar a alguien más?" << endl;
+				cout << "gustas buscar a alguien mas?" << endl;
 				cout << "digita Y para seguir" << endl;
 				cin >> varAnswer;
 				if (varAnswer == 'Y' || varAnswer == 'y') varFollow = true;
