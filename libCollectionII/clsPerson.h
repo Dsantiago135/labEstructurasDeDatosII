@@ -28,7 +28,7 @@ public:
 	}
 	friend ostream& operator << (ostream& os, clsPerson& p) {
 		os << p.attIdentificacion << endl;
-		os << p.opGenerateURL() << endl;
+		//os << p.opGenerateURL() << endl;
 		return os;
 	}
 	bool operator < (unsigned int rhs) {

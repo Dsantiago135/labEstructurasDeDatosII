@@ -38,8 +38,8 @@ int main() {
     cout << endl << "Prueba arbol AVL:"<< endl;
 
     cout << endl << "Prueba arbol N_Ario:" << endl;
-    clsADT_B_Tree<clsPerson, 3> directory;
-    directory.opDeserialize("Prueba.csv");
+    clsADT_B_Tree<clsPerson, 16> directory;
+    directory.opDeserialize("data.csv");
     directory.opInorder(cout);
     directory.opMenu();
     cout << endl;

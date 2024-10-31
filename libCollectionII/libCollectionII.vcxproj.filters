@@ -55,10 +55,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\..\..\Downloads\data.csv">
+    <None Include="Prueba.csv">
       <Filter>Archivos de encabezado</Filter>
     </None>
-    <None Include="Prueba.csv">
+    <None Include="data.csv">
       <Filter>Archivos de encabezado</Filter>
     </None>
   </ItemGroup>

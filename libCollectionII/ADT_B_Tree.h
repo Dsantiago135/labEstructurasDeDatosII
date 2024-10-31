@@ -265,11 +265,11 @@ namespace libTree {
 					//se inserta el dato y colapsa el arreglo
 					prmNode->opInsertInNode(prmData);
 					//se obtiene la posición del dato medio
-					size_t varMiddle = (prmNode->opCount()-1) / 2;
+					size_t varMiddle = (prmNode->attData.size() - 1) / 2;
 					//se crea el hermano que almacenara los datos mayores al dato medio
 					strNode* varBrotherNode = new strNode;
 					//transferencia de datos
-					for (size_t i = varMiddle + 1; i < prmNode->opCount(); i++) {
+					for (size_t i = varMiddle + 1; i < prmNode->attData.size(); i++) {
 						varBrotherNode->opInsertInNode(prmNode->attData[i]);
 					}
 					//eliminación de los datos ya pasados
@@ -287,7 +287,7 @@ namespace libTree {
 			//si el nodo no es hoja se busca al nodo correspondiente
 			else {
 				//el dato es menor al dato menor del nodo
-				if (prmData<prmNode->opFirst()) {
+				if (prmData < prmNode->opFirst()) {
 					return opInsert(prmNode->opFirst().attLeft, prmData, false);
 				}
 				//el dato es mayor al dato mayor del nodo
@@ -297,7 +297,7 @@ namespace libTree {
 				//la posición del dato es entre 2 datos del nodo
 				else {
 					//recorre el vector buscardo el dato que apunte al nodo necesario(donde se insertará el dato)
-					for (int i = 1; prmData < prmNode->attData[i]; i++) {
+					for (int i = 0; i < prmNode->attData.size(); i++) {
 						if (prmData < prmNode->attData[i]) {
 							return opInsert(prmNode->attData[i].attLeft, prmData, false);
 						}
