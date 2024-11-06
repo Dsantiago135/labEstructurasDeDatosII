@@ -433,6 +433,6 @@ namespace libTree {
 				if (varAnswer == 'Y' || varAnswer == 'y') varFollow = true;
 			} while (varFollow);
 		}
-		#pragma endregion 
+		#pragma endregion
 	};
 }
