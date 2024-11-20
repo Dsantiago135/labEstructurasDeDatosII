@@ -19,20 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\bfs.h" />
-    <ClInclude Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\dfs.h" />
-    <ClInclude Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\grafo.h" />
-    <ClInclude Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_costo_minimo.h" />
-    <ClInclude Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_grafo_nd.h" />
-    <ClInclude Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_recorridos.h" />
-    <ClInclude Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_recubridor_minimo.h" />
+    <ClInclude Include="bfs.h" />
+    <ClInclude Include="dfs.h" />
+    <ClInclude Include="grafo.h" />
+    <ClInclude Include="prueba_costo_minimo.h" />
+    <ClInclude Include="prueba_grafo_nd.h" />
+    <ClInclude Include="prueba_recorridos.h" />
+    <ClInclude Include="prueba_recubridor_minimo.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\main.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_costo_minimo.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_grafo_nd.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_recorridos.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_recubridor_minimo.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="prueba_costo_minimo.cpp" />
+    <ClCompile Include="prueba_grafo_nd.cpp" />
+    <ClCompile Include="prueba_recorridos.cpp" />
+    <ClCompile Include="prueba_recubridor_minimo.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

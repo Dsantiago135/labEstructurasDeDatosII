@@ -15,42 +15,42 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\bfs.h">
+    <ClInclude Include="bfs.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\dfs.h">
+    <ClInclude Include="dfs.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\grafo.h">
+    <ClInclude Include="grafo.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_costo_minimo.h">
+    <ClInclude Include="prueba_costo_minimo.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_grafo_nd.h">
+    <ClInclude Include="prueba_grafo_nd.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_recorridos.h">
+    <ClInclude Include="prueba_recorridos.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_recubridor_minimo.h">
+    <ClInclude Include="prueba_recubridor_minimo.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\main.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_costo_minimo.cpp">
+    <ClCompile Include="prueba_costo_minimo.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_grafo_nd.cpp">
+    <ClCompile Include="prueba_grafo_nd.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_recorridos.cpp">
+    <ClCompile Include="prueba_recorridos.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Downloads\5.0_grafos\5.0_grafos\prueba_recubridor_minimo.cpp">
+    <ClCompile Include="prueba_recubridor_minimo.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
